@@ -25,6 +25,12 @@ var max_hand_width: float = 650.0
 # -- Runtime --
 var _cards: Array[Card] = []
 
+func _enter_tree() -> void:
+	if Engine.is_editor_hint() :
+		return
+	
+	DebugInstance.hand_reference = self
+
 func _ready() -> void:
 	if Engine.is_editor_hint() :
 		return
