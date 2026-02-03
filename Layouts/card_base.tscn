@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cxjqc1spmocv5"]
+
+[ext_resource type="PackedScene" uid="uid://hdh8ms76fukf" path="res://Layouts/simple_stat.tscn" id="1_475hh"]
+[ext_resource type="Script" uid="uid://bg7e3lxg5hdk2" path="res://Scripts/card.gd" id="1_h1cya"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_hkptj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_h1cya"]
+font_size = 30
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 0)
+
+[node name="CardBase" type="MarginContainer" unique_id=1095353195 node_paths=PackedStringArray("indexLabel")]
+custom_minimum_size = Vector2(200, 300)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 1)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_h1cya")
+indexLabel = NodePath("Label")
+
+[node name="Background" type="TextureRect" parent="." unique_id=734073120]
+layout_mode = 2
+texture = SubResource("CanvasTexture_hkptj")
+
+[node name="Centralizer" type="CenterContainer" parent="." unique_id=1493345947]
+layout_mode = 2
+
+[node name="Vertical Content" type="VBoxContainer" parent="Centralizer" unique_id=119129430]
+layout_mode = 2
+alignment = 1
+
+[node name="Simple Stat" parent="Centralizer/Vertical Content" unique_id=2048147933 instance=ExtResource("1_475hh")]
+layout_mode = 2
+
+[node name="Simple Stat2" parent="Centralizer/Vertical Content" unique_id=1633091504 instance=ExtResource("1_475hh")]
+layout_mode = 2
+
+[node name="Interact Handler" type="Button" parent="." unique_id=1736336453]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="." unique_id=1054865573]
+layout_mode = 2
+size_flags_vertical = 0
+text = "0.5"
+label_settings = SubResource("LabelSettings_h1cya")
+horizontal_alignment = 1
+vertical_alignment = 3

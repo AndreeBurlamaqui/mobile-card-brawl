@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://hdh8ms76fukf"]
+
+[sub_resource type="Gradient" id="Gradient_hkptj"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0411k"]
+gradient = SubResource("Gradient_hkptj")
+
+[node name="Simple Stat" type="HBoxContainer" unique_id=2048147933]
+custom_minimum_size = Vector2(187.795, 40)
+offset_right = 187.795
+offset_bottom = 40.0
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1372856429]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = SubResource("GradientTexture1D_0411k")
+expand_mode = 1
+
+[node name="Number" type="RichTextLabel" parent="." unique_id=460163557]
+modulate = Color(0, 0, 0, 1)
+clip_contents = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][b]x88[/b][/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+tab_size = 1
+shortcut_keys_enabled = false
+vertical_alignment = 1
+justification_flags = 0

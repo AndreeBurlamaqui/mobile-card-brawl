@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://4mvtnmqrhhy7"]
+
+[ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/hand.gd" id="1_wn8ut"]
+[ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="2_wn8ut"]
+
+[node name="Node2D" type="Node2D" unique_id=370648351]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1780768995]
+
+[node name="Safe Zone" type="Control" parent="UI" unique_id=1823134308]
+layout_mode = 3
+anchor_top = 0.09166667
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Hand" type="Control" parent="UI/Safe Zone" unique_id=1588801474]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_wn8ut")
+
+[node name="CardBase" parent="UI/Safe Zone/Hand" unique_id=1095353195 instance=ExtResource("2_wn8ut")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = -260.0
+offset_right = -200.0
+offset_bottom = 40.0
+grow_vertical = 0
+rotation = -0.17453292
+
+[node name="CardBase2" parent="UI/Safe Zone/Hand" unique_id=791112283 instance=ExtResource("2_wn8ut")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -317.5
+offset_top = -276.0
+offset_right = -42.5
+offset_bottom = 24.0
+grow_vertical = 0
+rotation = -0.10471976
+
+[node name="CardBase3" parent="UI/Safe Zone/Hand" unique_id=825184114 instance=ExtResource("2_wn8ut")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -193.0
+offset_top = -292.0
+offset_right = 73.0
+offset_bottom = 8.0
+grow_vertical = 0
+rotation = -0.034906585
+
+[node name="CardBase4" parent="UI/Safe Zone/Hand" unique_id=1228058108 instance=ExtResource("2_wn8ut")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -40.0
+offset_top = -292.0
+offset_right = 160.0
+offset_bottom = 8.0
+grow_vertical = 0
+rotation = 0.034906585
+
+[node name="CardBase5" parent="UI/Safe Zone/Hand" unique_id=1599680540 instance=ExtResource("2_wn8ut")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = 80.0
+offset_top = -276.0
+offset_right = 280.0
+offset_bottom = 24.0
+grow_vertical = 0
+rotation = 0.10471976
+
+[node name="CardBase6" parent="UI/Safe Zone/Hand" unique_id=708848855 instance=ExtResource("2_wn8ut")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = 200.0
+offset_top = -260.0
+offset_right = 400.0
+offset_bottom = 40.0
+grow_vertical = 0
+rotation = 0.17453292
