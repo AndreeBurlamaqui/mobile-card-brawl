@@ -79,7 +79,10 @@ func start_drag(draggable: DraggableComponent) -> void:
 	current_visual.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	current_visual.global_position = current_drag.global_position
 	drag_offset = current_visual.size * current_visual.pivot_offset_ratio + current_visual.pivot_offset
-	create_tween().tween_property(current_visual, "rotation", 0, 0.15)
+	var pickTween = create_tween().set_parallel(true)
+	pickTween.tween_property(current_visual, "rotation", 0, 0.15)
+	pickTween.tween_property(current_visual, "scale", current_visual.scale * 1.25, 0.15)
+	pickTween.play()
 	
 	drag_drop_canvas.add_child(current_visual)
 	
