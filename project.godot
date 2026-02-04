@@ -16,6 +16,10 @@ run/main_scene="uid://4mvtnmqrhhy7"
 config/features=PackedStringArray("4.6")
 config/icon="res://icon.svg"
 
+[autoload]
+
+DragDropManager="*uid://hg816tn26qor"
+
 [display]
 
 window/size/viewport_width=480
