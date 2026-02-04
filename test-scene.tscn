@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://di7g556g50go0" path="res://Scripts/dev_debug.gd" id="1_8amj3"]
 [ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/hand.gd" id="1_wn8ut"]
 [ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="2_wn8ut"]
+[ext_resource type="Script" uid="uid://djdhmknv2ymyv" path="res://Scripts/battle_controller.gd" id="3_cp2na"]
+[ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Drag and Drop/droppable_component.gd" id="4_02nmi"]
 
 [node name="Node2D" type="Node2D" unique_id=370648351]
 metadata/_edit_vertical_guides_ = [-504.0]
@@ -57,12 +59,9 @@ size_flags_horizontal = 3
 [node name="CardBase" parent="UI/Safe Zone/Hand" unique_id=1095353195 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
 anchors_preset = 7
-anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 0.5
-offset_left = -37.5
+anchor_bottom = 1.0
 offset_top = -100.0
-offset_right = 37.5
 offset_bottom = 0.0
 grow_vertical = 0
 
@@ -73,6 +72,7 @@ anchor_right = 0.98333335
 anchor_bottom = 0.58409786
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_cp2na")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=203523270]
@@ -82,6 +82,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="DroppableComponent" type="Control" parent="UI/Safe Zone/Battle Zone/Panel" unique_id=1054799672]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_02nmi")
+metadata/_custom_type_script = "uid://cirdbbgmkqwlm"
 
 [node name="Debug UI" type="Control" parent="UI" unique_id=1353064158 node_paths=PackedStringArray("hand_reference")]
 top_level = true
@@ -133,5 +143,8 @@ custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = "-"
 
+[connection signal="on_drop_received" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_drop_received"]
+[connection signal="on_hover_enter" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_enter"]
+[connection signal="on_hover_exit" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_exit"]
 [connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Add Card" to="UI/Debug UI" method="_on_add_card_pressed"]
 [connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Remove Card" to="UI/Debug UI" method="_on_remove_card_pressed"]

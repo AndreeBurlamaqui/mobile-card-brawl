@@ -31,6 +31,7 @@ func _ready() -> void:
 # Call this whenever you add/remove a card to the hand
 func add_card(card: Control) -> void:
 	_cards.append(card)
+	card.initiate(self)
 	add_child(card)
 	
 	# Create Ghost
