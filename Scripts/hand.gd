@@ -100,7 +100,7 @@ func reorder_hand() -> void:
 		# 4. Apply (Tween or Snap)
 		if Engine.is_editor_hint():
 			card.global_position = target_pos
-			card.rotation_degrees = target_rot
+			card.visual.rotation_degrees = target_rot
 		else:
 			_animate_card_to(card, target_pos, target_rot)
 
@@ -112,7 +112,7 @@ func _animate_card_to(card: Card, target_pos: Vector2, target_rot: float) -> voi
 	
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(card, "position", target_pos, anim_speed)
-	tween.parallel().tween_property(card, "rotation_degrees", target_rot, anim_speed)
+	tween.parallel().tween_property(card.visual, "rotation_degrees", target_rot, anim_speed)
 	
 	# Store reference to kill it later if needed
 	card.set_meta("moving_card_tween", tween)

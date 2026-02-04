@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://hdh8ms76fukf" path="res://Layouts/simple_stat.tscn" id="1_475hh"]
 [ext_resource type="Script" uid="uid://bg7e3lxg5hdk2" path="res://Scripts/card.gd" id="1_h1cya"]
+[ext_resource type="Script" uid="uid://b120y0j0n7edn" path="res://Scripts/Drag and Drop/draggable_component.gd" id="3_43rbr"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_hkptj"]
 
@@ -11,8 +12,9 @@ shadow_size = 6
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(0, 0)
 
-[node name="CardBase" type="MarginContainer" unique_id=1095353195 node_paths=PackedStringArray("indexLabel")]
+[node name="CardBase" type="Control" unique_id=829716194 node_paths=PackedStringArray("indexLabel", "visual")]
 custom_minimum_size = Vector2(75, 100)
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,36 +22,61 @@ offset_right = -405.0
 offset_bottom = -620.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 1)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_h1cya")
-indexLabel = NodePath("Label")
+indexLabel = NodePath("Visual Root/Label")
+visual = NodePath("Visual Root")
 
-[node name="Background" type="TextureRect" parent="." unique_id=734073120]
-layout_mode = 2
+[node name="Visual Root" type="Control" parent="." unique_id=427676443]
+anchors_preset = 0
+offset_right = 75.0
+offset_bottom = 100.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="Background" type="TextureRect" parent="Visual Root" unique_id=734073120]
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 100.0
 texture = SubResource("CanvasTexture_hkptj")
 
-[node name="Centralizer" type="CenterContainer" parent="." unique_id=1493345947]
-layout_mode = 2
+[node name="Centralizer" type="CenterContainer" parent="Visual Root" unique_id=1493345947]
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 100.0
 
-[node name="Vertical Content" type="VBoxContainer" parent="Centralizer" unique_id=119129430]
+[node name="Vertical Content" type="VBoxContainer" parent="Visual Root/Centralizer" unique_id=119129430]
 layout_mode = 2
 alignment = 1
 
-[node name="Simple Stat" parent="Centralizer/Vertical Content" unique_id=2048147933 instance=ExtResource("1_475hh")]
+[node name="Simple Stat" parent="Visual Root/Centralizer/Vertical Content" unique_id=2048147933 instance=ExtResource("1_475hh")]
 layout_mode = 2
 
-[node name="Simple Stat2" parent="Centralizer/Vertical Content" unique_id=1633091504 instance=ExtResource("1_475hh")]
+[node name="Simple Stat2" parent="Visual Root/Centralizer/Vertical Content" unique_id=1633091504 instance=ExtResource("1_475hh")]
 layout_mode = 2
 
-[node name="Interact Handler" type="Button" parent="." unique_id=1736336453]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="." unique_id=1054865573]
-layout_mode = 2
+[node name="Label" type="Label" parent="Visual Root" unique_id=1054865573]
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 42.0
 size_flags_vertical = 0
 text = "0.5"
 label_settings = SubResource("LabelSettings_h1cya")
 horizontal_alignment = 1
 vertical_alignment = 3
+
+[node name="Interact Handler" type="Button" parent="." unique_id=1736336453]
+layout_mode = 0
+offset_right = 75.0
+offset_bottom = 100.0
+flat = true
+
+[node name="DraggableComponent" type="Control" parent="." unique_id=657253045 node_paths=PackedStringArray("visual", "target")]
+anchors_preset = 0
+offset_right = 75.0
+offset_bottom = 100.0
+script = ExtResource("3_43rbr")
+visual = NodePath("../Visual Root")
+target = NodePath("..")
+metadata/_custom_type_script = "uid://b120y0j0n7edn"
