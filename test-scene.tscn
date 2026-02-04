@@ -1,11 +1,63 @@
 [gd_scene format=3 uid="uid://4mvtnmqrhhy7"]
 
+[ext_resource type="Script" uid="uid://di7g556g50go0" path="res://Scripts/dev_debug.gd" id="1_8amj3"]
 [ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/hand.gd" id="1_wn8ut"]
 [ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="2_wn8ut"]
 
 [node name="Node2D" type="Node2D" unique_id=370648351]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1780768995]
+
+[node name="Debug UI" type="Control" parent="UI" unique_id=1353064158 node_paths=PackedStringArray("hand_reference")]
+top_level = true
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8amj3")
+hand_reference = NodePath("../Safe Zone/Hand")
+card_scene = ExtResource("2_wn8ut")
+
+[node name="FoldableContainer" type="FoldableContainer" parent="UI/Debug UI" unique_id=840405188]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -12.0
+offset_right = 12.0
+offset_bottom = 32.0
+grow_horizontal = 2
+folded = true
+title = "Debug"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Debug UI/FoldableContainer" unique_id=336886089]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer" unique_id=974316632]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer" unique_id=1805810408]
+layout_mode = 2
+text = "Hand Card"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer" unique_id=878724277]
+layout_mode = 2
+alignment = 1
+
+[node name="Add Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=898217239]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "+"
+
+[node name="Remove Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1356032993]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "-"
 
 [node name="Safe Zone" type="Control" parent="UI" unique_id=1823134308]
 layout_mode = 3
@@ -19,14 +71,17 @@ metadata/_edit_use_anchors_ = true
 [node name="Hand" type="Control" parent="UI/Safe Zone" unique_id=1588801474]
 process_mode = 3
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 1)
 script = ExtResource("1_wn8ut")
+arch_height = 650.0
+rotation_curve = 40.0
+default_card_spacing = 10.0
 
 [node name="CardBase" parent="UI/Safe Zone/Hand" unique_id=1095353195 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
@@ -34,74 +89,69 @@ anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -400.0
-offset_top = -260.0
-offset_right = -200.0
-offset_bottom = 40.0
+anchor_bottom = 1.0
+offset_left = -36.5
+offset_top = -125.0
+offset_right = 36.5
+offset_bottom = 0.0
+grow_horizontal = 2
 grow_vertical = 0
-rotation = -0.17453292
 
-[node name="CardBase2" parent="UI/Safe Zone/Hand" unique_id=791112283 instance=ExtResource("2_wn8ut")]
+[node name="CardBase2" parent="UI/Safe Zone/Hand" unique_id=980215230 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -317.5
-offset_top = -276.0
-offset_right = -42.5
-offset_bottom = 24.0
+anchor_bottom = 1.0
+offset_left = -36.5
+offset_top = -125.0
+offset_right = 36.5
+offset_bottom = 0.0
+grow_horizontal = 2
 grow_vertical = 0
-rotation = -0.10471976
 
-[node name="CardBase3" parent="UI/Safe Zone/Hand" unique_id=825184114 instance=ExtResource("2_wn8ut")]
+[node name="CardBase3" parent="UI/Safe Zone/Hand" unique_id=964987799 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -193.0
-offset_top = -292.0
-offset_right = 73.0
-offset_bottom = 8.0
+anchor_bottom = 1.0
+offset_left = -36.5
+offset_top = -125.0
+offset_right = 36.5
+offset_bottom = 0.0
+grow_horizontal = 2
 grow_vertical = 0
-rotation = -0.034906585
 
-[node name="CardBase4" parent="UI/Safe Zone/Hand" unique_id=1228058108 instance=ExtResource("2_wn8ut")]
+[node name="CardBase4" parent="UI/Safe Zone/Hand" unique_id=1372571655 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -40.0
-offset_top = -292.0
-offset_right = 160.0
-offset_bottom = 8.0
+anchor_bottom = 1.0
+offset_left = -36.5
+offset_top = -125.0
+offset_right = 36.5
+offset_bottom = 0.0
+grow_horizontal = 2
 grow_vertical = 0
-rotation = 0.034906585
 
-[node name="CardBase5" parent="UI/Safe Zone/Hand" unique_id=1599680540 instance=ExtResource("2_wn8ut")]
+[node name="CardBase5" parent="UI/Safe Zone/Hand" unique_id=933485480 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
-offset_left = 80.0
-offset_top = -276.0
-offset_right = 280.0
-offset_bottom = 24.0
+anchor_bottom = 1.0
+offset_left = -36.5
+offset_top = -125.0
+offset_right = 36.5
+offset_bottom = 0.0
+grow_horizontal = 2
 grow_vertical = 0
-rotation = 0.10471976
 
-[node name="CardBase6" parent="UI/Safe Zone/Hand" unique_id=708848855 instance=ExtResource("2_wn8ut")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-offset_left = 200.0
-offset_top = -260.0
-offset_right = 400.0
-offset_bottom = 40.0
-grow_vertical = 0
-rotation = 0.17453292
+[connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Add Card" to="UI/Debug UI" method="_on_add_card_pressed"]
+[connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Remove Card" to="UI/Debug UI" method="_on_remove_card_pressed"]
