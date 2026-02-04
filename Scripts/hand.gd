@@ -75,19 +75,16 @@ func reorder_hand() -> void:
 		var ghost = _ghosts[i]
 		
 		# Ghost position conversion to local
-		var ghost_screen_pos = ghost.global_position
-		var target_pos = get_global_transform().affine_inverse() * ghost_screen_pos
-		
-		# Center Alignment correction
-		target_pos.x += ghost.size.x / 2.0 # Ghost is Top-Left, we want Center-Bottom
-		target_pos.y += ghost.size.y / 2.0       # Baseline
-		
+		var target_pos = ghost.global_position
+		target_pos += (ghost.size / 2.0) # Center Alignment correction
+	
 		# Arch Logic
 		var ratio: float = 0.0
 		if _cards.size() > 1:
 			ratio = float(i) / float(_cards.size() - 1)
 			ratio = (ratio - 0.5) * 2.0
 		
+		card.indexLabel.text = ("%0.2f" % ratio)
 		var arch_y = abs(ratio) * arch_height
 		target_pos.y += arch_y
 		
@@ -111,7 +108,7 @@ func _animate_card_to(card: Card, target_pos: Vector2, target_rot: float) -> voi
 		if t and t.is_valid(): t.kill()
 	
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(card, "position", target_pos, anim_speed)
+	tween.parallel().tween_property(card, "global_position", target_pos, anim_speed)
 	tween.parallel().tween_property(card.visual, "rotation_degrees", target_rot, anim_speed)
 	
 	# Store reference to kill it later if needed
