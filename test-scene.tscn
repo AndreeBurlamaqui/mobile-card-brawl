@@ -68,20 +68,37 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Hand" type="Control" parent="UI/Safe Zone" unique_id=1588801474]
+[node name="Hand" type="Control" parent="UI/Safe Zone" unique_id=1588801474 node_paths=PackedStringArray("card_placement")]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -224.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 1)
 script = ExtResource("1_wn8ut")
-arch_height = 650.0
-rotation_curve = 40.0
-default_card_spacing = 10.0
+card_placement = NodePath("Card Placement")
+arch_height = 60.0
+rotation_curve = 25.0
+
+[node name="Card Placement" type="HBoxContainer" parent="UI/Safe Zone/Hand" unique_id=1795840903]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Panel Base" type="Panel" parent="UI/Safe Zone/Hand/Card Placement" unique_id=41829138]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="CardBase" parent="UI/Safe Zone/Hand" unique_id=1095353195 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
@@ -89,68 +106,10 @@ anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -36.5
-offset_top = -125.0
-offset_right = 36.5
+offset_left = -37.5
+offset_top = -100.0
+offset_right = 37.5
 offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="CardBase2" parent="UI/Safe Zone/Hand" unique_id=980215230 instance=ExtResource("2_wn8ut")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -36.5
-offset_top = -125.0
-offset_right = 36.5
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="CardBase3" parent="UI/Safe Zone/Hand" unique_id=964987799 instance=ExtResource("2_wn8ut")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -36.5
-offset_top = -125.0
-offset_right = 36.5
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="CardBase4" parent="UI/Safe Zone/Hand" unique_id=1372571655 instance=ExtResource("2_wn8ut")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -36.5
-offset_top = -125.0
-offset_right = 36.5
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="CardBase5" parent="UI/Safe Zone/Hand" unique_id=933485480 instance=ExtResource("2_wn8ut")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -36.5
-offset_top = -125.0
-offset_right = 36.5
-offset_bottom = 0.0
-grow_horizontal = 2
 grow_vertical = 0
 
 [connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Add Card" to="UI/Debug UI" method="_on_add_card_pressed"]
