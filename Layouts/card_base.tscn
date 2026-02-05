@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://hdh8ms76fukf" path="res://Layouts/simple_stat.tscn" id="1_475hh"]
 [ext_resource type="Script" uid="uid://bg7e3lxg5hdk2" path="res://Scripts/card.gd" id="1_h1cya"]
-[ext_resource type="Script" uid="uid://b120y0j0n7edn" path="res://Scripts/Drag and Drop/draggable_component.gd" id="3_43rbr"]
+[ext_resource type="Script" uid="uid://b120y0j0n7edn" path="res://Scripts/Components/Drag and Drop/draggable_component.gd" id="3_43rbr"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_hkptj"]
 

@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://4mvtnmqrhhy7"]
 
 [ext_resource type="Script" uid="uid://di7g556g50go0" path="res://Scripts/dev_debug.gd" id="1_8amj3"]
+[ext_resource type="Script" uid="uid://derujt32ntfy0" path="res://Scripts/Components/UIParallax.gd" id="1_j40gt"]
 [ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/hand.gd" id="1_wn8ut"]
 [ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="2_wn8ut"]
 [ext_resource type="Script" uid="uid://djdhmknv2ymyv" path="res://Scripts/battle_controller.gd" id="3_cp2na"]
-[ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Drag and Drop/droppable_component.gd" id="4_02nmi"]
+[ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Components/Drag and Drop/droppable_component.gd" id="4_02nmi"]
 
 [node name="Node2D" type="Node2D" unique_id=370648351]
 metadata/_edit_vertical_guides_ = [-504.0]
@@ -21,6 +22,8 @@ grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_j40gt")
+max_offset = Vector2(5, 5)
 metadata/_edit_use_anchors_ = true
 
 [node name="Hand" type="Control" parent="UI/Safe Zone" unique_id=1588801474 node_paths=PackedStringArray("card_placement")]
@@ -91,7 +94,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_02nmi")
-metadata/_custom_type_script = "uid://cirdbbgmkqwlm"
 
 [node name="Debug UI" type="Control" parent="UI" unique_id=1353064158 node_paths=PackedStringArray("hand_reference")]
 top_level = true
