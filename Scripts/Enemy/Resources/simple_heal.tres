@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyAction" format=3 uid="uid://ws8eh5kmyub4"]
+
+[ext_resource type="Script" uid="uid://bcjiiuym55711" path="res://Scripts/Enemy/enemy_action_data.gd" id="1_ipohg"]
+[ext_resource type="Texture2D" uid="uid://n8el3rmm13vo" path="res://Assets/Sprites/card_spades_suit.png" id="2_3747a"]
+
+[resource]
+script = ExtResource("1_ipohg")
+symbol = ExtResource("2_3747a")
+amount = 5
+metadata/_custom_type_script = "uid://bcjiiuym55711"

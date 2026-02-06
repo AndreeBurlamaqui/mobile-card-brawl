@@ -1,9 +1,6 @@
 [gd_scene format=3 uid="uid://hdh8ms76fukf"]
 
-[sub_resource type="Gradient" id="Gradient_hkptj"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_0411k"]
-gradient = SubResource("Gradient_hkptj")
+[ext_resource type="Texture2D" uid="uid://cplf8j0flpsag" path="res://Assets/Sprites/card_clubs_suit.png" id="1_2mtip"]
 
 [node name="Simple Stat" type="HBoxContainer" unique_id=2048147933]
 anchors_preset = 15
@@ -11,24 +8,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
 alignment = 1
 
 [node name="Icon" type="TextureRect" parent="." unique_id=1372856429]
+texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-texture = SubResource("GradientTexture1D_0411k")
+texture = ExtResource("1_2mtip")
 expand_mode = 1
-
-[node name="Number" type="RichTextLabel" parent="." unique_id=460163557]
-modulate = Color(0, 0, 0, 1)
-clip_contents = false
-layout_mode = 2
-bbcode_enabled = true
-text = "[center][b]x88[/b][/center]"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-tab_size = 1
-shortcut_keys_enabled = false
-vertical_alignment = 1
-justification_flags = 0
+stretch_mode = 4

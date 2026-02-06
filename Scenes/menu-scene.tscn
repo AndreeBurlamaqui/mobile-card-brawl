@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cyxbipqjkyxyo"]
+
+[node name="Node2D" type="Node2D" unique_id=1383024363]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1303308650]
+
+[node name="Safe zone" type="Control" parent="UI" unique_id=2136427938]
+layout_mode = 3
+anchor_top = 0.08888889
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Menu" type="HBoxContainer" parent="UI/Safe zone" unique_id=1273710004]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8780488
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="UI/Safe zone/Menu" unique_id=310302934]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 30.0
+
+[node name="Panel2" type="Panel" parent="UI/Safe zone/Menu" unique_id=1662633252]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 70.0
+
+[node name="Panel3" type="Panel" parent="UI/Safe zone/Menu" unique_id=562425953]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 30.0
+
+[node name="Menu 1" type="Control" parent="UI/Safe zone" unique_id=1497601969]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.09756097
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="UI/Safe zone/Menu 1" unique_id=149562318]
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 64.0
+
+[node name="Panel2" type="Panel" parent="UI/Safe zone/Menu 1" unique_id=119662199]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 64.0
+grow_horizontal = 2
+
+[node name="Panel3" type="Panel" parent="UI/Safe zone/Menu 1" unique_id=1108759359]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_bottom = 64.0
+grow_horizontal = 0

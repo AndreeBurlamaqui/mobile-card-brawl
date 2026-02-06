@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://l8n1iymcxir6"]
+
+[ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Components/Drag and Drop/droppable_component.gd" id="1_2gkm3"]
+[ext_resource type="Script" uid="uid://ba5ds7wyugip7" path="res://Scripts/Enemy/enemy_action_visual.gd" id="1_fxbct"]
+[ext_resource type="Texture2D" uid="uid://cplf8j0flpsag" path="res://Assets/Sprites/card_clubs_suit.png" id="2_fxbct"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bny8x"]
+expand_margin_left = 15.0
+expand_margin_top = 10.0
+expand_margin_right = 15.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_lwosb"]
+font_size = 30
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 0)
+
+[node name="EnemyAction" type="MarginContainer" unique_id=62146282 node_paths=PackedStringArray("icon", "label")]
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_fxbct")
+icon = NodePath("Simple Stat/Icon")
+label = NodePath("Simple Stat/Label")
+
+[node name="Panel3" type="Panel" parent="." unique_id=912098890]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bny8x")
+
+[node name="DroppableComponent" type="Control" parent="Panel3" unique_id=2076531832]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2gkm3")
+
+[node name="Simple Stat" type="HBoxContainer" parent="." unique_id=481995462]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Simple Stat" unique_id=1593575852]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_fxbct")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Simple Stat" unique_id=1666790724]
+layout_mode = 2
+text = "88"
+label_settings = SubResource("LabelSettings_lwosb")
