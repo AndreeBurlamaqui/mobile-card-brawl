@@ -17,6 +17,7 @@ func _ready() -> void:
 		
 		# By setting the stretch ratio we make that actions that are "stronger" bigger
 		new_action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		new_action.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		new_action.size_flags_stretch_ratio = action_data.amount
 		
 		action_container.add_child(new_action)
