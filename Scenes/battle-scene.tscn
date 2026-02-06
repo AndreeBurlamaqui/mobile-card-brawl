@@ -2,10 +2,17 @@
 
 [ext_resource type="Script" uid="uid://di7g556g50go0" path="res://Scripts/dev_debug.gd" id="1_8amj3"]
 [ext_resource type="Script" uid="uid://derujt32ntfy0" path="res://Scripts/Components/UIParallax.gd" id="1_j40gt"]
-[ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/hand.gd" id="1_wn8ut"]
+[ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/Player/hand.gd" id="1_wn8ut"]
 [ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="2_wn8ut"]
 [ext_resource type="Script" uid="uid://djdhmknv2ymyv" path="res://Scripts/battle_controller.gd" id="3_cp2na"]
 [ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Components/Drag and Drop/droppable_component.gd" id="4_02nmi"]
+[ext_resource type="PackedScene" uid="uid://l8n1iymcxir6" path="res://Layouts/enemy_action.tscn" id="6_2f2pn"]
+[ext_resource type="Script" uid="uid://b0cmw28qjw7sl" path="res://Scripts/Enemy/enemy_actions_controller.gd" id="6_s7fgw"]
+[ext_resource type="Script" uid="uid://blp6x540ad8ul" path="res://Scripts/Symbols/symbol_data.gd" id="9_x04n6"]
+[ext_resource type="Resource" uid="uid://cq83bsypge6fb" path="res://Scripts/Symbols/symbol_club.tres" id="10_5jsw1"]
+[ext_resource type="Resource" uid="uid://cej81r2bumagb" path="res://Scripts/Symbols/symbol_diamond.tres" id="11_3gloy"]
+[ext_resource type="Resource" uid="uid://c73cblgftmdge" path="res://Scripts/Symbols/symbol_heart.tres" id="12_tgkur"]
+[ext_resource type="Resource" uid="uid://csmkewqnj04b2" path="res://Scripts/Symbols/symbol_spade.tres" id="13_xru1l"]
 
 [node name="Node2D" type="Node2D" unique_id=370648351]
 metadata/_edit_vertical_guides_ = [-504.0]
@@ -18,13 +25,11 @@ anchor_top = 0.08888889
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
+grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_j40gt")
 max_offset = Vector2(5, 5)
-metadata/_edit_use_anchors_ = true
 
 [node name="Hand" type="Control" parent="UI/Safe Zone" unique_id=1588801474 node_paths=PackedStringArray("card_placement")]
 process_mode = 3
@@ -33,13 +38,14 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -224.0
-offset_bottom = -4.0
+offset_top = -192.0
+offset_bottom = -42.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 1)
 script = ExtResource("1_wn8ut")
 card_placement = NodePath("Card Placement")
+card_visual = ExtResource("2_wn8ut")
 arch_height = 60.0
 rotation_curve = 25.0
 
@@ -72,7 +78,7 @@ grow_vertical = 0
 layout_mode = 1
 anchor_left = 0.016666668
 anchor_right = 0.98333335
-anchor_bottom = 0.58409786
+anchor_bottom = 0.68292683
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_cp2na")
@@ -87,6 +93,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="DroppableComponent" type="Control" parent="UI/Safe Zone/Battle Zone/Panel" unique_id=1054799672]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,6 +101,105 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_02nmi")
+
+[node name="Enemy Actions" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=1841629782 node_paths=PackedStringArray("action_container")]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -283.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("6_s7fgw")
+action_container = NodePath("FlowContainer")
+action_template = ExtResource("6_2f2pn")
+
+[node name="FlowContainer" type="FlowContainer" parent="UI/Safe Zone/Battle Zone/Enemy Actions" unique_id=2005932268]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+last_wrap_alignment = 2
+vertical = true
+
+[node name="EnemyAction" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=62146282 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EnemyAction2" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=1287848391 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EnemyAction3" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=95157149 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EnemyAction4" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=1590400397 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 88.0
+
+[node name="EnemyAction5" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=986161645 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 88.0
+
+[node name="EnemyAction6" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=243183264 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Player Actions" type="Control" parent="UI/Safe Zone" unique_id=193009401]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Safe Zone/Player Actions" unique_id=1242934706]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Deck" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=1884911938]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HP" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=2104587561]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/Safe Zone/Player Actions/HBoxContainer/HP" unique_id=1545032923]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+rounded = true
+
+[node name="Pass" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=1128567898]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Debug UI" type="Control" parent="UI" unique_id=1353064158 node_paths=PackedStringArray("hand_reference")]
 top_level = true
@@ -105,7 +211,7 @@ anchor_right = 0.5
 grow_horizontal = 2
 script = ExtResource("1_8amj3")
 hand_reference = NodePath("../Safe Zone/Hand")
-card_scene = ExtResource("2_wn8ut")
+card_types = Array[ExtResource("9_x04n6")]([ExtResource("10_5jsw1"), ExtResource("11_3gloy"), ExtResource("12_tgkur"), ExtResource("13_xru1l")])
 
 [node name="FoldableContainer" type="FoldableContainer" parent="UI/Debug UI" unique_id=840405188]
 layout_mode = 1
