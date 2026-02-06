@@ -2,6 +2,7 @@ class_name Hand extends Control
 
 @export_group("References")
 @export var card_placement: HBoxContainer
+@export var card_visual: PackedScene
 
 @export_group("Hand Layout")
 ## The visual curve height. Higher numbers make a steeper arch.
@@ -14,13 +15,13 @@ class_name Hand extends Control
 @export var anim_speed: float = 0.2
 
 # -- Runtime --
-var _cards: Array[Card] = []
+var _cards: Array[CardVisual] = []
 var _ghosts: Array[Control] = []
 
 func _ready() -> void:
 	# Clean up any placeholder cards used for editor design
 	for child in get_children():
-		if child is Card: child.queue_free()
+		if child is CardVisual: child.queue_free()
 	for child in card_placement.get_children():
 		child.queue_free()
 	
@@ -29,10 +30,11 @@ func _ready() -> void:
 	#resized.connect(func(): reorder_hand())
 
 # Call this whenever you add/remove a card to the hand
-func add_card(card: Control) -> void:
-	_cards.append(card)
-	card.initiate(self)
-	add_child(card)
+func add_card(data: CardData) -> void:
+	var new_card = card_visual.instantiate()
+	new_card.setup(data, self)
+	_cards.append(new_card)
+	add_child(new_card)
 	
 	# Create Ghost
 	var newGhost = Panel.new()
@@ -102,7 +104,7 @@ func reorder_hand() -> void:
 		else:
 			_animate_card_to(card, target_pos, target_rot)
 
-func _animate_card_to(card: Card, target_pos: Vector2, target_rot: float) -> void:
+func _animate_card_to(card: CardVisual, target_pos: Vector2, target_rot: float) -> void:
 	# Kill existing tweens on this card so we don't fight
 	if card.has_meta("moving_card_tween"):
 		var t = card.get_meta("moving_card_tween") as Tween

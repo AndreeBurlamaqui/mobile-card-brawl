@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://cxjqc1spmocv5"]
 
-[ext_resource type="PackedScene" uid="uid://hdh8ms76fukf" path="res://Layouts/simple_stat.tscn" id="1_475hh"]
-[ext_resource type="Script" uid="uid://bg7e3lxg5hdk2" path="res://Scripts/card.gd" id="1_h1cya"]
+[ext_resource type="Script" uid="uid://bg7e3lxg5hdk2" path="res://Scripts/Player/card_visual.gd" id="1_h1cya"]
 [ext_resource type="Texture2D" uid="uid://08vib7eux3fd" path="res://Assets/Sprites/card_empty.png" id="2_4hoaw"]
+[ext_resource type="Texture2D" uid="uid://cplf8j0flpsag" path="res://Assets/Sprites/card_clubs_suit.png" id="3_4hoaw"]
 [ext_resource type="Script" uid="uid://b120y0j0n7edn" path="res://Scripts/Components/Drag and Drop/draggable_component.gd" id="3_43rbr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uvdu3"]
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_h1cya"]
 font_size = 30
@@ -11,7 +16,7 @@ shadow_size = 6
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(0, 0)
 
-[node name="CardBase" type="Control" unique_id=829716194 node_paths=PackedStringArray("indexLabel", "visual")]
+[node name="CardBase" type="Control" unique_id=829716194 node_paths=PackedStringArray("indexLabel", "visual", "icon", "amount_label")]
 custom_minimum_size = Vector2(75, 100)
 layout_mode = 3
 anchors_preset = 8
@@ -31,6 +36,8 @@ size_flags_vertical = 3
 script = ExtResource("1_h1cya")
 indexLabel = NodePath("Visual Root/Debug Index")
 visual = NodePath("Visual Root")
+icon = NodePath("Visual Root/Vertical Content/Icon")
+amount_label = NodePath("Visual Root/Vertical Content/Amount")
 
 [node name="Visual Root" type="Control" parent="." unique_id=427676443]
 anchors_preset = 0
@@ -54,25 +61,33 @@ patch_margin_top = 15
 patch_margin_right = 20
 patch_margin_bottom = 15
 
-[node name="Centralizer" type="CenterContainer" parent="Visual Root" unique_id=1493345947]
+[node name="Vertical Content" type="VBoxContainer" parent="Visual Root" unique_id=119129430]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.04
-anchor_right = 0.97333336
-anchor_bottom = 0.96
+anchor_left = 0.07333333
+anchor_top = 0.08
+anchor_right = 0.88666666
+anchor_bottom = 0.93
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Vertical Content" type="VBoxContainer" parent="Visual Root/Centralizer" unique_id=119129430]
+[node name="Icon" type="TextureRect" parent="Visual Root/Vertical Content" unique_id=1385718297]
+texture_filter = 1
 layout_mode = 2
-alignment = 1
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.0
+texture = ExtResource("3_4hoaw")
+stretch_mode = 6
 
-[node name="Simple Stat" parent="Visual Root/Centralizer/Vertical Content" unique_id=2048147933 instance=ExtResource("1_475hh")]
+[node name="Amount" type="Label" parent="Visual Root/Vertical Content" unique_id=2053969366]
 layout_mode = 2
-
-[node name="Simple Stat2" parent="Visual Root/Centralizer/Vertical Content" unique_id=1633091504 instance=ExtResource("1_475hh")]
-layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+text = "88"
+label_settings = SubResource("LabelSettings_uvdu3")
+horizontal_alignment = 1
 
 [node name="Debug Index" type="Label" parent="Visual Root" unique_id=1054865573]
 layout_mode = 1

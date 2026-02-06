@@ -2,7 +2,7 @@ class_name Debug extends Node
 
 # -- Dependencies --
 @export var hand_reference: Hand
-@export var card_scene: PackedScene
+@export var card_types: Array[SymbolData]
 
 # -- Configuration --
 
@@ -11,7 +11,7 @@ func _ready() -> void:
 	if not hand_reference:
 		push_error("DebugInterface: Hand Reference is missing!")
 		return
-	if not card_scene:
+	if not card_types or card_types.is_empty():
 		push_error("DebugInterface: Card Scene is missing!")
 		return
 
@@ -26,9 +26,8 @@ func _on_clear_pressed() -> void:
 
 
 func _on_add_card_pressed() -> void:
-	var new_card = card_scene.instantiate()
-	# Optional: Set random data here if you have a data class
-	# new_card.set_data(CardData.new_random()) 
+	var randomType = card_types.pick_random()
+	var new_card := CardData.new(randomType, randi_range(1, 4))
 	hand_reference.add_card(new_card)
 
 
