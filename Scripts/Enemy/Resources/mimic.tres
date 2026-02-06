@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://b67vcb5gwep5t"]
+
+[ext_resource type="Script" uid="uid://bcjiiuym55711" path="res://Scripts/Enemy/enemy_action_data.gd" id="1_jy4ig"]
+[ext_resource type="Resource" uid="uid://cq83bsypge6fb" path="res://Scripts/Symbols/symbol_club.tres" id="2_ln6rn"]
+[ext_resource type="Script" uid="uid://ty2nb1glgo3w" path="res://Scripts/Enemy/enemy_data.gd" id="2_wntrg"]
+[ext_resource type="Resource" uid="uid://cej81r2bumagb" path="res://Scripts/Symbols/symbol_diamond.tres" id="3_dghkk"]
+[ext_resource type="Resource" uid="uid://csmkewqnj04b2" path="res://Scripts/Symbols/symbol_spade.tres" id="4_5dn10"]
+
+[sub_resource type="Resource" id="Resource_e6jyy"]
+script = ExtResource("1_jy4ig")
+type = ExtResource("2_ln6rn")
+required_amount = 4
+metadata/_custom_type_script = "uid://bcjiiuym55711"
+
+[sub_resource type="Resource" id="Resource_8kpu0"]
+script = ExtResource("1_jy4ig")
+type = ExtResource("3_dghkk")
+required_amount = 8
+metadata/_custom_type_script = "uid://bcjiiuym55711"
+
+[sub_resource type="Resource" id="Resource_dxvtt"]
+script = ExtResource("1_jy4ig")
+type = ExtResource("4_5dn10")
+required_amount = 2
+metadata/_custom_type_script = "uid://bcjiiuym55711"
+
+[resource]
+script = ExtResource("2_wntrg")
+alias = "Mimic"
+actions = Array[ExtResource("1_jy4ig")]([SubResource("Resource_e6jyy"), SubResource("Resource_8kpu0"), SubResource("Resource_dxvtt")])
+metadata/_custom_type_script = "uid://ty2nb1glgo3w"

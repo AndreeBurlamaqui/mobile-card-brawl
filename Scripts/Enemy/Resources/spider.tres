@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://blx7irc5ltpcq"]
+
+[ext_resource type="Script" uid="uid://bcjiiuym55711" path="res://Scripts/Enemy/enemy_action_data.gd" id="1_ci6e3"]
+[ext_resource type="Resource" uid="uid://csmkewqnj04b2" path="res://Scripts/Symbols/symbol_spade.tres" id="2_21581"]
+[ext_resource type="Script" uid="uid://ty2nb1glgo3w" path="res://Scripts/Enemy/enemy_data.gd" id="2_xpc8c"]
+
+[sub_resource type="Resource" id="Resource_rnxwm"]
+script = ExtResource("1_ci6e3")
+type = ExtResource("2_21581")
+required_amount = 6
+metadata/_custom_type_script = "uid://bcjiiuym55711"
+
+[resource]
+script = ExtResource("2_xpc8c")
+actions = Array[ExtResource("1_ci6e3")]([SubResource("Resource_rnxwm")])
+metadata/_custom_type_script = "uid://ty2nb1glgo3w"

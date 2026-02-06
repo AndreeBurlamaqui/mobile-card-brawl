@@ -1,22 +1,21 @@
 class_name Debug extends Node
 
-# -- Dependencies --
+@export var battle_controller: BattleController
+
+#region CARD VARIABLES
 @export var hand_reference: Hand
 @export var card_types: Array[SymbolData]
+#endregion
 
-# -- Configuration --
+#region ENEMY VARIABLES
+@export var enemy_list: Array[EnemyData]
+@export var battle_button_containers: VBoxContainer
+#endregion
 
 func _ready() -> void:
-	# Verify dependencies to avoid crashes
-	if not hand_reference:
-		push_error("DebugInterface: Hand Reference is missing!")
-		return
-	if not card_types or card_types.is_empty():
-		push_error("DebugInterface: Card Scene is missing!")
-		return
+	_setup_enemies()
 
-# -- Debug Actions --
-
+#region CARD ACTIONS
 func _on_clear_pressed() -> void:
 	var cards = hand_reference.get_children()
 	for child in cards:
@@ -40,3 +39,22 @@ func _on_remove_card_pressed() -> void:
 	var card_to_remove = cards.back()
 	hand_reference.remove_card(card_to_remove)
 	card_to_remove.queue_free()
+#endregion
+
+#region ENEMY ACTIONS
+func _setup_enemies():
+	# Clear placeholders
+	for child in battle_button_containers.get_children():
+		child.queue_free()
+	
+	for enemy in enemy_list:
+		var enemy_battle_button = Button.new()
+		enemy_battle_button.text = enemy.alias
+		enemy_battle_button.pressed.connect(_start_battle.bind(enemy))
+		enemy_battle_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		enemy_battle_button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		battle_button_containers.add_child(enemy_battle_button)
+
+func _start_battle(enemy: EnemyData):
+	battle_controller.start_battle(enemy)
+#endregion

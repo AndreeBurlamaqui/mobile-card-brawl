@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://doq168jlgr2m3"]
+
+[ext_resource type="Script" uid="uid://bcjiiuym55711" path="res://Scripts/Enemy/enemy_action_data.gd" id="1_i4tfd"]
+[ext_resource type="Resource" uid="uid://c73cblgftmdge" path="res://Scripts/Symbols/symbol_heart.tres" id="2_m45w0"]
+[ext_resource type="Script" uid="uid://ty2nb1glgo3w" path="res://Scripts/Enemy/enemy_data.gd" id="2_r0dvm"]
+[ext_resource type="Resource" uid="uid://csmkewqnj04b2" path="res://Scripts/Symbols/symbol_spade.tres" id="3_p1tww"]
+
+[sub_resource type="Resource" id="Resource_toxrl"]
+script = ExtResource("1_i4tfd")
+type = ExtResource("2_m45w0")
+required_amount = 6
+metadata/_custom_type_script = "uid://bcjiiuym55711"
+
+[sub_resource type="Resource" id="Resource_g43wc"]
+script = ExtResource("1_i4tfd")
+type = ExtResource("3_p1tww")
+required_amount = 4
+metadata/_custom_type_script = "uid://bcjiiuym55711"
+
+[resource]
+script = ExtResource("2_r0dvm")
+alias = "Rat"
+actions = Array[ExtResource("1_i4tfd")]([SubResource("Resource_toxrl"), SubResource("Resource_g43wc")])
+metadata/_custom_type_script = "uid://ty2nb1glgo3w"

@@ -1,9 +1,8 @@
-extends Panel
+class_name EnemyActionController extends Panel
 
 @export var action_container: FlowContainer
 @export var action_template: PackedScene
 
-var _current_enemy: EnemyData
 var _current_actions: Array[EnemyActionRuntime] = []
 
 func setup(enemy: EnemyData):
@@ -11,8 +10,8 @@ func setup(enemy: EnemyData):
 	for child in action_container.get_children():
 		child.queue_free()
 	
-	_current_enemy = enemy
-	for action in _current_enemy.actions:
+	_current_actions.clear()
+	for action in enemy.actions:
 		_add_action(action)
 
 func _add_action(data: EnemyActionData):
@@ -27,7 +26,7 @@ func _add_action(data: EnemyActionData):
 	# By setting the stretch ratio we make that actions that are "stronger" bigger
 	new_action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	new_action.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	new_action.size_flags_stretch_ratio = data.amount
+	new_action.size_flags_stretch_ratio = data.required_amount
 	
 	new_action.droppable_area.on_drop_received.connect( _on_action_targeted.bind(runtime_data))
 	
@@ -43,3 +42,16 @@ func _on_action_targeted(draggable: DraggableComponent, action: EnemyActionRunti
 	
 	var player_damage = used_card.apply()
 	action.take_hit(player_damage)
+
+func apply_every_penalties(battle: BattleController) -> void:
+	if _current_actions.is_empty():
+		return
+	
+	for action in _current_actions:
+		action.apply_penalty(battle)
+
+func is_round_cleared() -> bool:
+	for action in _current_actions:
+		if not action.is_cleared():
+			return false
+	return true

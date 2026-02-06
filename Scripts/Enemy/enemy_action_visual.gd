@@ -10,10 +10,14 @@ func _ready() -> void:
 	droppable_area.on_drop_received.connect(_on_droppable_drop_received)
 
 func setup(action: EnemyActionRuntime):
+	# Initial setup
 	icon.texture = action.data.type.icon
+	_on_challenge_update(0, action.current_amount)
+	
+	# Signals
 	action.challenge_update.connect(_on_challenge_update)
 	action.challenge_cleared.connect(_on_challenge_cleared)
-	_on_challenge_update(0, action.current_amount) # Initial value
+	action.challenge_penalty.connect(_on_challenge_penalty)
 
 func _on_challenge_update(old_value: int, new_value: int) -> void:
 	# TODO: Add animation value changing from old to new
@@ -21,6 +25,11 @@ func _on_challenge_update(old_value: int, new_value: int) -> void:
 
 func _on_challenge_cleared() -> void:
 	pass
+
+func _on_challenge_penalty() -> void:
+	var penalty_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
+	penalty_tween.tween_property(self, "scale", 1.5, 0.25)
+	penalty_tween.tween_property(self, "scale", 1, 0.1)
 
 func _on_droppable_hover_enter(draggable: DraggableComponent) -> void:
 	modulate.a = 0.5

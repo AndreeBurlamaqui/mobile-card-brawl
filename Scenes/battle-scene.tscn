@@ -13,6 +13,10 @@
 [ext_resource type="Resource" uid="uid://cej81r2bumagb" path="res://Scripts/Symbols/symbol_diamond.tres" id="11_3gloy"]
 [ext_resource type="Resource" uid="uid://c73cblgftmdge" path="res://Scripts/Symbols/symbol_heart.tres" id="12_tgkur"]
 [ext_resource type="Resource" uid="uid://csmkewqnj04b2" path="res://Scripts/Symbols/symbol_spade.tres" id="13_xru1l"]
+[ext_resource type="Script" uid="uid://ty2nb1glgo3w" path="res://Scripts/Enemy/enemy_data.gd" id="14_0wh4h"]
+[ext_resource type="Resource" uid="uid://b67vcb5gwep5t" path="res://Scripts/Enemy/Resources/mimic.tres" id="15_w2bj3"]
+[ext_resource type="Resource" uid="uid://doq168jlgr2m3" path="res://Scripts/Enemy/Resources/rat.tres" id="16_e63i4"]
+[ext_resource type="Resource" uid="uid://blx7irc5ltpcq" path="res://Scripts/Enemy/Resources/spider.tres" id="17_5cecb"]
 
 [node name="Node2D" type="Node2D" unique_id=370648351]
 metadata/_edit_vertical_guides_ = [-504.0]
@@ -74,7 +78,7 @@ offset_top = -100.0
 offset_bottom = 0.0
 grow_vertical = 0
 
-[node name="Battle Zone" type="Control" parent="UI/Safe Zone" unique_id=1031509843]
+[node name="Battle Zone" type="Control" parent="UI/Safe Zone" unique_id=1031509843 node_paths=PackedStringArray("enemy_actions_controller")]
 layout_mode = 1
 anchor_left = 0.016666668
 anchor_right = 0.98333335
@@ -82,6 +86,7 @@ anchor_bottom = 0.68292683
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_cp2na")
+enemy_actions_controller = NodePath("Enemy Actions")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=203523270]
@@ -201,7 +206,7 @@ rounded = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Debug UI" type="Control" parent="UI" unique_id=1353064158 node_paths=PackedStringArray("hand_reference")]
+[node name="Debug UI" type="Control" parent="UI" unique_id=1353064158 node_paths=PackedStringArray("battle_controller", "hand_reference", "battle_button_containers")]
 top_level = true
 z_as_relative = false
 layout_mode = 3
@@ -210,8 +215,11 @@ anchor_left = 0.5
 anchor_right = 0.5
 grow_horizontal = 2
 script = ExtResource("1_8amj3")
+battle_controller = NodePath("../Safe Zone/Battle Zone")
 hand_reference = NodePath("../Safe Zone/Hand")
 card_types = Array[ExtResource("9_x04n6")]([ExtResource("10_5jsw1"), ExtResource("11_3gloy"), ExtResource("12_tgkur"), ExtResource("13_xru1l")])
+enemy_list = Array[ExtResource("14_0wh4h")]([ExtResource("15_w2bj3"), ExtResource("16_e63i4"), ExtResource("17_5cecb")])
+battle_button_containers = NodePath("FoldableContainer/HBoxContainer/Enemies/FoldableContainer/ScrollContainer/VBoxContainer")
 
 [node name="FoldableContainer" type="FoldableContainer" parent="UI/Debug UI" unique_id=840405188]
 layout_mode = 1
@@ -222,37 +230,95 @@ offset_left = -12.0
 offset_right = 12.0
 offset_bottom = 32.0
 grow_horizontal = 2
-folded = true
 title = "Debug"
+title_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Debug UI/FoldableContainer" unique_id=336886089]
-visible = false
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Card" type="VBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer" unique_id=974316632]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer" unique_id=974316632]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer" unique_id=1805810408]
+[node name="Label" type="Label" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Card" unique_id=1805810408]
 layout_mode = 2
 text = "Hand Card"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer" unique_id=878724277]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Card" unique_id=878724277]
 layout_mode = 2
 alignment = 1
 
-[node name="Add Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=898217239]
+[node name="Add Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2" unique_id=898217239]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = "+"
 
-[node name="Remove Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1356032993]
+[node name="Remove Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2" unique_id=1356032993]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = "-"
 
+[node name="Enemies" type="VBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer" unique_id=90152708]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies" unique_id=1119319889]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="Add Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/HBoxContainer2" unique_id=1949245420]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "<"
+
+[node name="Label" type="Label" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/HBoxContainer2" unique_id=1638680662]
+layout_mode = 2
+text = "Enemy Name"
+
+[node name="Remove Card" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/HBoxContainer2" unique_id=1573339936]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = ">"
+
+[node name="Button" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies" unique_id=1743884873]
+visible = false
+layout_mode = 2
+text = "Battle"
+
+[node name="FoldableContainer" type="FoldableContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies" unique_id=1016830551]
+layout_mode = 2
+title = "Battle Enemy"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/FoldableContainer" unique_id=883835608]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+follow_focus = true
+draw_focus_border = true
+horizontal_scroll_mode = 0
+scroll_hint_mode = 1
+tile_scroll_hint = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/FoldableContainer/ScrollContainer" unique_id=614968151]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="Button" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/FoldableContainer/ScrollContainer/VBoxContainer" unique_id=862477839]
+layout_mode = 2
+text = "Mimic"
+
+[node name="Button2" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/FoldableContainer/ScrollContainer/VBoxContainer" unique_id=1729319848]
+layout_mode = 2
+text = "Rat"
+
+[node name="Button3" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/FoldableContainer/ScrollContainer/VBoxContainer" unique_id=1138108097]
+layout_mode = 2
+text = "MimicSpider"
+
 [connection signal="on_drop_received" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_drop_received"]
 [connection signal="on_hover_enter" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_enter"]
 [connection signal="on_hover_exit" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_exit"]
-[connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Add Card" to="UI/Debug UI" method="_on_add_card_pressed"]
-[connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Remove Card" to="UI/Debug UI" method="_on_remove_card_pressed"]
+[connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2/Add Card" to="UI/Debug UI" method="_on_add_card_pressed"]
+[connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2/Remove Card" to="UI/Debug UI" method="_on_remove_card_pressed"]
