@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SymbolData" format=3 uid="uid://c73cblgftmdge"]
+
+[ext_resource type="Texture2D" uid="uid://c8jxf7rf2t0xl" path="res://Assets/Sprites/card_hearts_suit.png" id="1_2gup5"]
+[ext_resource type="Script" uid="uid://blp6x540ad8ul" path="res://Scripts/Symbols/symbol_data.gd" id="1_pjnna"]
+
+[resource]
+script = ExtResource("1_pjnna")
+icon = ExtResource("1_2gup5")
+metadata/_custom_type_script = "uid://blp6x540ad8ul"

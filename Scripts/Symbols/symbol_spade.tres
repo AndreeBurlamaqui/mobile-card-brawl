@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SymbolData" format=3 uid="uid://csmkewqnj04b2"]
+
+[ext_resource type="Script" uid="uid://blp6x540ad8ul" path="res://Scripts/Symbols/symbol_data.gd" id="1_44cls"]
+[ext_resource type="Texture2D" uid="uid://n8el3rmm13vo" path="res://Assets/Sprites/card_spades_suit.png" id="1_ncrvj"]
+
+[resource]
+script = ExtResource("1_44cls")
+icon = ExtResource("1_ncrvj")
+metadata/_custom_type_script = "uid://blp6x540ad8ul"
