@@ -16,7 +16,7 @@ shadow_size = 10
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(0, 0)
 
-[node name="EnemyAction" type="MarginContainer" unique_id=62146282 node_paths=PackedStringArray("icon", "label")]
+[node name="EnemyAction" type="MarginContainer" unique_id=62146282 node_paths=PackedStringArray("icon", "label", "droppable_area")]
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 15
@@ -24,6 +24,7 @@ theme_override_constants/margin_bottom = 10
 script = ExtResource("1_fxbct")
 icon = NodePath("Simple Stat/Icon")
 label = NodePath("Simple Stat/Label")
+droppable_area = NodePath("Panel3/DroppableComponent")
 
 [node name="Panel3" type="Panel" parent="." unique_id=912098890]
 layout_mode = 2
