@@ -5,6 +5,11 @@ class_name Parallax extends Control
 @export var max_offset: Vector2
 @export var smoothing: float = 2.0
 
+var _start_position: Vector2
+
+func _ready() -> void:
+	_start_position = position
+
 func _process(delta: float) -> void:
 	var center: Vector2 = get_viewport_rect().size / 2.0
 	var dist = _get_parallax_distance(center)
@@ -12,7 +17,7 @@ func _process(delta: float) -> void:
 	
 	# Clamp to ensure we never overshoot even if mouse leaves window
 	offset = offset.clamp(Vector2(-1, -1), Vector2(1, 1))
-	var target_pos: Vector2 = max_offset * -offset
+	var target_pos: Vector2 = _start_position + (max_offset * -offset)
 	
 	position = position.lerp(target_pos, smoothing * delta)
 
