@@ -38,6 +38,7 @@ func setup(new_deck: Array[CardData]) -> void:
 	
 	for i in range(5): # Initial card hand amount
 		add_next_deck_card()
+		await get_tree().create_timer(0.15).timeout
 
 func add_next_deck_card() -> void:
 	var next_card = _deck.pick_random()
