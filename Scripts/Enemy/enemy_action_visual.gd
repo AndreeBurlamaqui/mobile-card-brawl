@@ -29,8 +29,9 @@ func _on_challenge_cleared() -> void:
 
 func _on_challenge_penalty() -> void:
 	var penalty_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
-	penalty_tween.tween_property(self, "scale", 1.5, 0.5)
-	penalty_tween.tween_property(self, "scale", 1, 0.35)
+	penalty_tween.tween_property(self, "scale", Vector2.ONE * 1.15, 0.25)
+	penalty_tween.tween_property(self, "scale", Vector2.ONE, 0.1)
+	penalty_tween.play()
 
 func _on_droppable_hover_enter(draggable: DraggableComponent) -> void:
 	modulate.a = 0.5
