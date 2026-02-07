@@ -118,7 +118,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_02nmi")
 
-[node name="Enemy Actions" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=1841629782 node_paths=PackedStringArray("action_container")]
+[node name="Enemy Actions" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=1841629782]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -131,16 +131,17 @@ offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("6_s7fgw")
-action_container = NodePath("FlowContainer")
 action_template = ExtResource("6_2f2pn")
 
-[node name="FlowContainer" type="FlowContainer" parent="UI/Safe Zone/Battle Zone/Enemy Actions" unique_id=2005932268]
+[node name="FlowContainer" type="FlowContainer" parent="UI/Safe Zone/Battle Zone/Enemy Actions" unique_id=1388004689]
+layout_direction = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1, 0.9967448)
 alignment = 1
 last_wrap_alignment = 2
 vertical = true
@@ -149,21 +150,6 @@ vertical = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="EnemyAction2" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=1287848391 instance=ExtResource("6_2f2pn")]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="EnemyAction3" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=95157149 instance=ExtResource("6_2f2pn")]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="EnemyAction4" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=1590400397 instance=ExtResource("6_2f2pn")]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 88.0
 
 [node name="EnemyAction5" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=986161645 instance=ExtResource("6_2f2pn")]
 layout_mode = 2

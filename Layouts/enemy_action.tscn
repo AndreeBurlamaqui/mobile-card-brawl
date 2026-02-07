@@ -17,6 +17,9 @@ shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(0, 0)
 
 [node name="EnemyAction" type="MarginContainer" unique_id=62146282 node_paths=PackedStringArray("icon", "label", "droppable_area")]
+custom_minimum_size = Vector2(125, 0)
+offset_right = 108.0
+offset_bottom = 80.0
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 15
