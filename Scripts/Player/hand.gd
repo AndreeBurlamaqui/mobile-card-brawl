@@ -1,5 +1,7 @@
 class_name Hand extends Control
 
+signal deck_change(deck: Array[CardData])
+
 @export_group("References")
 @export var card_placement: HBoxContainer
 @export var card_visual: PackedScene
@@ -38,11 +40,12 @@ func setup(new_deck: Array[CardData]) -> void:
 		add_next_deck_card()
 
 func add_next_deck_card() -> void:
-	add_card(_deck.pick_random())
+	var next_card = _deck.pick_random()
+	add_card(next_card)
+	_deck.erase(next_card) # Remove from deck first to not duplicate
+	deck_change.emit(_deck)
 
 func add_card(data: CardData) -> void:
-	_deck.erase(data) # Remove from deck first to not duplicate
-	
 	var new_card = card_visual.instantiate()
 	new_card.setup(data, self)
 	_cards.append(new_card)

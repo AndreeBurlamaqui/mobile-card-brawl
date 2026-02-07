@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Components/Drag and Drop/droppable_component.gd" id="4_02nmi"]
 [ext_resource type="PackedScene" uid="uid://l8n1iymcxir6" path="res://Layouts/enemy_action.tscn" id="6_2f2pn"]
 [ext_resource type="Script" uid="uid://b0cmw28qjw7sl" path="res://Scripts/Enemy/enemy_actions_controller.gd" id="6_s7fgw"]
+[ext_resource type="Script" uid="uid://n68q84k6t5e7" path="res://Scripts/Player/player_actions.gd" id="8_w2bj3"]
 [ext_resource type="Script" uid="uid://blp6x540ad8ul" path="res://Scripts/Symbols/symbol_data.gd" id="9_x04n6"]
 [ext_resource type="Resource" uid="uid://cq83bsypge6fb" path="res://Scripts/Symbols/symbol_club.tres" id="10_5jsw1"]
 [ext_resource type="Resource" uid="uid://cej81r2bumagb" path="res://Scripts/Symbols/symbol_diamond.tres" id="11_3gloy"]
@@ -17,6 +18,12 @@
 [ext_resource type="Resource" uid="uid://b67vcb5gwep5t" path="res://Scripts/Enemy/Resources/mimic.tres" id="15_w2bj3"]
 [ext_resource type="Resource" uid="uid://doq168jlgr2m3" path="res://Scripts/Enemy/Resources/rat.tres" id="16_e63i4"]
 [ext_resource type="Resource" uid="uid://blx7irc5ltpcq" path="res://Scripts/Enemy/Resources/spider.tres" id="17_5cecb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e63i4"]
+line_spacing = -7.0
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0wh4h"]
 font_size = 40
@@ -45,8 +52,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -192.0
-offset_bottom = -42.0
+offset_top = -200.0
+offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 1)
@@ -124,8 +131,8 @@ offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("6_s7fgw")
-action_template = ExtResource("6_2f2pn")
 action_container = NodePath("FlowContainer")
+action_template = ExtResource("6_2f2pn")
 
 [node name="FlowContainer" type="FlowContainer" parent="UI/Safe Zone/Battle Zone/Enemy Actions" unique_id=2005932268]
 layout_mode = 1
@@ -169,15 +176,20 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Player Actions" type="Control" parent="UI/Safe Zone" unique_id=193009401]
+[node name="Player Actions" type="Control" parent="UI/Safe Zone" unique_id=193009401 node_paths=PackedStringArray("deck_count", "hp_bar")]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -24.0
+anchor_left = 0.033333335
+anchor_top = 0.93947566
+anchor_right = 0.96666664
+anchor_bottom = 0.9876708
+offset_top = -0.2960205
+offset_bottom = 0.08795166
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("8_w2bj3")
+deck_count = NodePath("HBoxContainer/Deck/Label")
+hp_bar = NodePath("HBoxContainer/HP/ProgressBar")
+metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Safe Zone/Player Actions" unique_id=1242934706]
 layout_mode = 1
@@ -190,6 +202,20 @@ grow_vertical = 2
 [node name="Deck" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=1884911938]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/Safe Zone/Player Actions/HBoxContainer/Deck" unique_id=1899256740]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Deck
+88/88"
+label_settings = SubResource("LabelSettings_e63i4")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [node name="HP" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=2104587561]
 layout_mode = 2
@@ -209,6 +235,15 @@ rounded = true
 [node name="Pass" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=1128567898]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="UI/Safe Zone/Player Actions/HBoxContainer/Pass" unique_id=1805181863]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Pass"
 
 [node name="Debug UI" type="Control" parent="UI" unique_id=1353064158 node_paths=PackedStringArray("battle_controller", "hand_reference", "battle_button_containers")]
 top_level = true
@@ -360,5 +395,6 @@ uppercase = true
 [connection signal="on_drop_received" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_drop_received"]
 [connection signal="on_hover_enter" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_enter"]
 [connection signal="on_hover_exit" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_exit"]
+[connection signal="pressed" from="UI/Safe Zone/Player Actions/HBoxContainer/Pass/Button" to="UI/Safe Zone/Player Actions" method="_on_pass_pressed"]
 [connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2/Add Card" to="UI/Debug UI" method="_on_add_card_pressed"]
 [connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2/Remove Card" to="UI/Debug UI" method="_on_remove_card_pressed"]

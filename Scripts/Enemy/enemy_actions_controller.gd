@@ -43,12 +43,16 @@ func _on_action_targeted(draggable: DraggableComponent, action: EnemyActionRunti
 	var player_damage = used_card.apply()
 	action.take_hit(player_damage)
 
-func apply_every_penalties(battle: BattleController) -> void:
+func apply_every_penalties() -> void:
 	if _current_actions.is_empty():
 		return
 	
 	for action in _current_actions:
-		action.apply_penalty(battle)
+		if action.is_cleared():
+			continue
+		
+		action.apply_penalty()
+		await get_tree().create_timer(1).timeout
 
 func is_round_cleared() -> bool:
 	for action in _current_actions:

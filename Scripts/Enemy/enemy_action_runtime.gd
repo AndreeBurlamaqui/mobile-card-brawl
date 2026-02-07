@@ -18,13 +18,13 @@ func take_hit(amount: int) -> void:
 	challenge_update.emit(current_amount, new_amount)
 	
 	current_amount = new_amount
-	if current_amount == 0:
+	if is_cleared():
 		challenge_cleared.emit()
 
 func is_cleared() -> bool:
 	return current_amount <= 0
 
-func apply_penalty(battle: BattleController) -> void:
+func apply_penalty() -> void:
 	# Will be the base of actions. For now will jsut damage on fail
-	battle.hit_player(data.damage_on_fail)
+	BattleController.instance.hit_player(data.damage_on_fail)
 	challenge_penalty.emit()

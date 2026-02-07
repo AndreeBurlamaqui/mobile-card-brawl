@@ -24,12 +24,13 @@ func _on_challenge_update(old_value: int, new_value: int) -> void:
 	label.text = str(new_value)
 
 func _on_challenge_cleared() -> void:
-	pass
+	modulate.a = 0.25
+	modulate = Color.DIM_GRAY
 
 func _on_challenge_penalty() -> void:
 	var penalty_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
-	penalty_tween.tween_property(self, "scale", 1.5, 0.25)
-	penalty_tween.tween_property(self, "scale", 1, 0.1)
+	penalty_tween.tween_property(self, "scale", 1.5, 0.5)
+	penalty_tween.tween_property(self, "scale", 1, 0.35)
 
 func _on_droppable_hover_enter(draggable: DraggableComponent) -> void:
 	modulate.a = 0.5
