@@ -18,6 +18,9 @@
 [ext_resource type="Resource" uid="uid://doq168jlgr2m3" path="res://Scripts/Enemy/Resources/rat.tres" id="16_e63i4"]
 [ext_resource type="Resource" uid="uid://blx7irc5ltpcq" path="res://Scripts/Enemy/Resources/spider.tres" id="17_5cecb"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_0wh4h"]
+font_size = 40
+
 [node name="Node2D" type="Node2D" unique_id=370648351]
 metadata/_edit_vertical_guides_ = [-504.0]
 
@@ -78,7 +81,7 @@ offset_top = -100.0
 offset_bottom = 0.0
 grow_vertical = 0
 
-[node name="Battle Zone" type="Control" parent="UI/Safe Zone" unique_id=1031509843 node_paths=PackedStringArray("enemy_actions_controller")]
+[node name="Battle Zone" type="Control" parent="UI/Safe Zone" unique_id=1031509843 node_paths=PackedStringArray("enemy_controller", "player_controller")]
 layout_mode = 1
 anchor_left = 0.016666668
 anchor_right = 0.98333335
@@ -86,7 +89,8 @@ anchor_bottom = 0.68292683
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_cp2na")
-enemy_actions_controller = NodePath("Enemy Actions")
+enemy_controller = NodePath("Enemy Actions")
+player_controller = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=203523270]
@@ -120,8 +124,8 @@ offset_bottom = -32.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("6_s7fgw")
-action_container = NodePath("FlowContainer")
 action_template = ExtResource("6_2f2pn")
+action_container = NodePath("FlowContainer")
 
 [node name="FlowContainer" type="FlowContainer" parent="UI/Safe Zone/Battle Zone/Enemy Actions" unique_id=2005932268]
 layout_mode = 1
@@ -230,10 +234,12 @@ offset_left = -12.0
 offset_right = 12.0
 offset_bottom = 32.0
 grow_horizontal = 2
+folded = true
 title = "Debug"
 title_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Debug UI/FoldableContainer" unique_id=336886089]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 20
 
@@ -288,9 +294,11 @@ text = "Battle"
 
 [node name="FoldableContainer" type="FoldableContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies" unique_id=1016830551]
 layout_mode = 2
+folded = true
 title = "Battle Enemy"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/FoldableContainer" unique_id=883835608]
+visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 follow_focus = true
@@ -316,6 +324,38 @@ text = "Rat"
 [node name="Button3" type="Button" parent="UI/Debug UI/FoldableContainer/HBoxContainer/Enemies/FoldableContainer/ScrollContainer/VBoxContainer" unique_id=1138108097]
 layout_mode = 2
 text = "MimicSpider"
+
+[node name="Turn State Warn" type="Panel" parent="UI" unique_id=989024296]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI/Turn State Warn" unique_id=1843974047]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.42222223
+anchor_right = 1.0
+anchor_bottom = 0.51111114
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UI/Turn State Warn/Panel" unique_id=1521933445]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "player turn"
+label_settings = SubResource("LabelSettings_0wh4h")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
 
 [connection signal="on_drop_received" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_drop_received"]
 [connection signal="on_hover_enter" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_enter"]

@@ -1,5 +1,6 @@
-class_name Debug extends Node
+class_name BattleDebug extends Node
 
+static var instance: BattleDebug
 @export var battle_controller: BattleController
 
 #region CARD VARIABLES
@@ -11,6 +12,9 @@ class_name Debug extends Node
 @export var enemy_list: Array[EnemyData]
 @export var battle_button_containers: VBoxContainer
 #endregion
+
+func _init() -> void:
+	instance = self
 
 func _ready() -> void:
 	_setup_enemies()
@@ -39,6 +43,16 @@ func _on_remove_card_pressed() -> void:
 	var card_to_remove = cards.back()
 	hand_reference.remove_card(card_to_remove)
 	card_to_remove.queue_free()
+
+func get_random_deck(size: int) -> Array[CardData]:
+	var deck : Array[CardData] = []
+	for i in size:
+		var random_type = card_types.pick_random()
+		var random_damage = randi_range(1, 5)
+		var new_card = CardData.new(random_type, random_damage)
+		deck.append(new_card)
+	
+	return deck
 #endregion
 
 #region ENEMY ACTIONS

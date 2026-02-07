@@ -17,6 +17,7 @@ class_name Hand extends Control
 # -- Runtime --
 var _cards: Array[CardVisual] = []
 var _ghosts: Array[Control] = []
+var _deck: Array[CardData] = []
 
 func _ready() -> void:
 	# Clean up any placeholder cards used for editor design
@@ -29,8 +30,19 @@ func _ready() -> void:
 	## Connect to resize so we re-calculate if the screen size changes
 	#resized.connect(func(): reorder_hand())
 
-# Call this whenever you add/remove a card to the hand
+func setup(new_deck: Array[CardData]) -> void:
+	_deck = new_deck
+	_deck.shuffle()
+	
+	for i in range(5): # Initial card hand amount
+		add_next_deck_card()
+
+func add_next_deck_card() -> void:
+	add_card(_deck.pick_random())
+
 func add_card(data: CardData) -> void:
+	_deck.erase(data) # Remove from deck first to not duplicate
+	
 	var new_card = card_visual.instantiate()
 	new_card.setup(data, self)
 	_cards.append(new_card)
