@@ -45,6 +45,7 @@ func _process(delta: float) -> void:
 		
 		if current_shadow:
 			current_shadow.global_position = current_visual.global_position + _shadow_offset
+			current_shadow.global_position.x -= drag_offset.x / 2
 	
 	# Search for droppable zones
 	if current_drag:
@@ -93,13 +94,13 @@ func start_drag(draggable: DraggableComponent) -> void:
 	current_shadow = current_visual.duplicate(8)
 	current_shadow.modulate = Color(0, 0, 0, 0.4)
 	current_shadow.rotation = 0
-	current_shadow.scale = final_scale
+	current_shadow.scale = final_scale * 0.85
 	
 	# Prepare tweening
 	var pickTween = create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	pickTween.tween_property(current_visual, "rotation", 0, 0.15)
 	pickTween.tween_property(current_visual, "scale", final_scale, 0.25)
-	pickTween.tween_property(self, "_shadow_offset", Vector2(0, 20), 0.5)
+	pickTween.tween_property(self, "_shadow_offset", Vector2(0, 30), 0.5)
 	
 	# Finish setup
 	drag_drop_canvas.add_child(current_shadow)
@@ -117,26 +118,39 @@ func start_drag(draggable: DraggableComponent) -> void:
 func _try_drop() -> void:
 	var success = false
 	if _last_hovered_droppable:
-		_last_hovered_droppable.on_drop_received.emit(current_drag)
-		success = true
+		if _last_hovered_droppable.can_accept(current_drag):
+			_last_hovered_droppable.on_drop_received.emit(current_drag)
+			success = true
+	
 	end_drag(success)
 
 func end_drag(success: bool = false) -> void:
 	if not current_drag:
+		print("Releasing drag without draggin anything")
 		return
 	
 	var drag_dropped = current_drag
+	var initial_position = drag_dropped.target.global_position
+	var lastVisual = current_visual
+	var lastShadow = current_shadow
+	
+	# Clear before tweening
+	current_drag = null
+	if _last_hovered_droppable:
+		_last_hovered_droppable.on_hover_exit.emit()
+		_last_hovered_droppable = null
+	
+	 # Tween moving if need
 	if not success:
 		# Quick tween it back to og pos
-		var lastVisual = current_visual
-		var initial_position = drag_dropped.target.global_position
-		var move_back_tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
+		var move_back_tween = create_tween()
+		move_back_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK)
+		move_back_tween.set_parallel(true)
 		move_back_tween.tween_property(lastVisual, "global_position", initial_position, 0.25)
+		move_back_tween.tween_property(lastShadow, "scale", Vector2.ZERO, 0.25)
 		await move_back_tween.finished
 	
 	drag_dropped.on_drag_ended()
-	current_visual.queue_free()
-	current_shadow.queue_free()
+	lastVisual.queue_free()
+	lastShadow.queue_free()
 	drag_ended.emit(drag_dropped, success)
-	current_drag = null
-	_last_hovered_droppable = null

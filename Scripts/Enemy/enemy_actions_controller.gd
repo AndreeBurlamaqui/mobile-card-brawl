@@ -26,21 +26,28 @@ func _add_action(data: EnemyActionData):
 	# By setting the stretch ratio we make that actions that are "stronger" bigger
 	new_action.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	new_action.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	new_action.size_flags_stretch_ratio = data.required_amount
+	new_action.size_flags_stretch_ratio = data.required_amount * 100
 	
 	new_action.droppable_area.on_drop_received.connect( _on_action_targeted.bind(runtime_data))
+	new_action.droppable_area.add_validator(_can_action_be_targeted.bind(runtime_data))
 	
 	action_container.add_child(new_action)
 
-func _on_action_targeted(draggable: DraggableComponent, action: EnemyActionRuntime ) -> void:
+func _can_action_be_targeted (draggable: DraggableComponent, action: EnemyActionRuntime ) -> bool:
 	if draggable.target is not CardVisual:
-		return
+		return false # Whats being dropped is not a card
 	
 	var used_card: CardVisual = draggable.target
 	if used_card.curData.type != action.data.type:
-		return
+		return false # Not the same symbol type
 	
-	var player_damage = used_card.apply()
+	return true # Nothing is blocking it. So it can
+
+func _on_action_targeted(draggable: DraggableComponent, action: EnemyActionRuntime ) -> void:
+	if not _can_action_be_targeted(draggable, action):
+		return # Double check
+	
+	var player_damage = (draggable.target as CardVisual).apply()
 	action.take_hit(player_damage)
 
 func apply_every_penalties() -> void:

@@ -42,24 +42,22 @@ grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_j40gt")
-max_offset = Vector2(5, 5)
 
 [node name="Hand" type="Control" parent="UI/Safe Zone" unique_id=1588801474 node_paths=PackedStringArray("card_placement")]
 process_mode = 3
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchor_top = 0.8582317
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -200.0
-offset_bottom = -50.0
+anchor_bottom = 0.9390244
+offset_top = -67.0
+offset_bottom = -80.0
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 1)
 script = ExtResource("1_wn8ut")
 card_placement = NodePath("Card Placement")
 card_visual = ExtResource("2_wn8ut")
-arch_height = 60.0
+arch_height = 30.0
 rotation_curve = 25.0
 
 [node name="Card Placement" type="HBoxContainer" parent="UI/Safe Zone/Hand" unique_id=1795840903]
@@ -80,18 +78,17 @@ size_flags_horizontal = 3
 
 [node name="CardBase" parent="UI/Safe Zone/Hand" unique_id=1095353195 instance=ExtResource("2_wn8ut")]
 layout_mode = 1
-anchors_preset = 7
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -100.0
-offset_bottom = 0.0
-grow_vertical = 0
+offset_left = -27.0
+offset_top = -50.0
+offset_right = 23.0
+offset_bottom = 25.0
 
 [node name="Battle Zone" type="Control" parent="UI/Safe Zone" unique_id=1031509843 node_paths=PackedStringArray("enemy_controller", "player_controller")]
 layout_mode = 1
 anchor_left = 0.016666668
+anchor_top = -0.036585364
 anchor_right = 0.98333335
-anchor_bottom = 0.68292683
+anchor_bottom = 0.64634144
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_cp2na")
