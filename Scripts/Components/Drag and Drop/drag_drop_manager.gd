@@ -6,7 +6,7 @@ signal drag_ended(draggable: DraggableComponent, success: bool)
 # -- Configuration --
 var drag_drop_canvas: CanvasLayer
 var drag_speed: float = 35
-var shadow_offset := Vector2(0, 15)
+var _shadow_offset := Vector2(0, 15)
 
 # -- State --
 var current_drag: DraggableComponent = null
@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 		current_visual.global_position = current_visual.global_position.lerp(mouse_pos - drag_offset, lerpTime)
 		
 		if current_shadow:
-			current_shadow.global_position = current_visual.global_position + shadow_offset
+			current_shadow.global_position = current_visual.global_position + _shadow_offset
 	
 	# Search for droppable zones
 	if current_drag:
@@ -98,15 +98,17 @@ func start_drag(draggable: DraggableComponent) -> void:
 	# Prepare tweening
 	var pickTween = create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	pickTween.tween_property(current_visual, "rotation", 0, 0.15)
-	pickTween.tween_property(current_visual, "scale", final_scale, 0.2)
+	pickTween.tween_property(current_visual, "scale", final_scale, 0.25)
+	pickTween.tween_property(self, "_shadow_offset", Vector2(0, 20), 0.5)
 	
 	# Finish setup
-	shadow_parallax.add_child(current_shadow)
+	drag_drop_canvas.add_child(current_shadow)
 	drag_drop_canvas.add_child(current_visual)
 	
 	# Start position for tweening
 	current_visual.global_position = original_pos
 	current_shadow.global_position = original_pos
+	_shadow_offset = Vector2.ZERO
 	
 	pickTween.play()
 	draggable.on_drag_started()
