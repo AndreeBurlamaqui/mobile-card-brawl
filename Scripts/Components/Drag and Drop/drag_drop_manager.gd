@@ -74,17 +74,23 @@ func get_droppable_at_position(screen_pos: Vector2) -> DroppableComponent:
 func start_drag(draggable: DraggableComponent) -> void:
 	current_drag = draggable
 	
+	# Store original visual info
+	var original_size = current_drag.visual.size
+	var original_pos = current_drag.visual.global_position
+	
 	# Duplicate the Visual
 	current_visual = current_drag.visual.duplicate(8) # 8 use instantiate()
 	current_visual.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	current_visual.global_position = current_drag.global_position
-	drag_offset = current_visual.size * current_visual.pivot_offset_ratio + current_visual.pivot_offset
+	current_visual.set_anchors_preset(Control.PRESET_TOP_LEFT) # Neutral layout
+	current_visual.size = original_size
+	drag_offset = original_size * current_visual.pivot_offset_ratio + current_visual.pivot_offset
 	var pickTween = create_tween().set_parallel(true)
 	pickTween.tween_property(current_visual, "rotation", 0, 0.15)
-	pickTween.tween_property(current_visual, "scale", current_visual.scale * 1.25, 0.15)
+	pickTween.tween_property(current_visual, "scale", current_drag.visual.scale * 1.35, 0.15)
 	pickTween.play()
 	
 	drag_drop_canvas.add_child(current_visual)
+	current_visual.global_position = original_pos
 	
 	draggable.on_drag_started()
 	drag_started.emit(draggable)
