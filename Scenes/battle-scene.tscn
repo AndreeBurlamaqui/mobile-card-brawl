@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/Player/hand.gd" id="1_wn8ut"]
 [ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="2_wn8ut"]
 [ext_resource type="Script" uid="uid://djdhmknv2ymyv" path="res://Scripts/battle_controller.gd" id="3_cp2na"]
-[ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Components/Drag and Drop/droppable_component.gd" id="4_02nmi"]
 [ext_resource type="PackedScene" uid="uid://l8n1iymcxir6" path="res://Layouts/enemy_action.tscn" id="6_2f2pn"]
 [ext_resource type="Script" uid="uid://b0cmw28qjw7sl" path="res://Scripts/Enemy/enemy_actions_controller.gd" id="6_s7fgw"]
 [ext_resource type="Script" uid="uid://n68q84k6t5e7" path="res://Scripts/Player/player_actions.gd" id="8_w2bj3"]
@@ -108,59 +107,148 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DroppableComponent" type="Control" parent="UI/Safe Zone/Battle Zone/Panel" unique_id=1054799672]
-visible = false
+[node name="Panel2" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=164642578]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.036000002
 anchor_right = 1.0
+anchor_bottom = 0.10700001
+offset_top = -0.12800026
+offset_bottom = 1.0639954
+grow_horizontal = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/Safe Zone/Battle Zone/Panel2" unique_id=323847023]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03448276
+anchor_right = 0.9655172
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_02nmi")
+bbcode_enabled = true
+text = "BIGGEST BOSS NAME OF ALL TIME"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Enemy Actions" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=1841629782]
+[node name="ProgressBar" type="ProgressBar" parent="UI/Safe Zone/Battle Zone/Panel2" unique_id=1716797227]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = -1
+anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -283.0
-offset_top = 32.0
-offset_right = -32.0
-offset_bottom = -32.0
+anchor_bottom = 1.455
+offset_bottom = -0.015003204
+grow_horizontal = 2
+grow_vertical = 0
+value = 50.0
+rounded = true
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Enemy Actions" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=1841629782 node_paths=PackedStringArray("action_container")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41424134
+anchor_top = 0.179
+anchor_right = 0.9654827
+anchor_bottom = 0.96471435
+offset_left = -0.2079773
+offset_top = -0.19200134
+offset_right = 0.016021729
+offset_bottom = -0.1920166
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("6_s7fgw")
+action_container = NodePath("FlowContainer")
 action_template = ExtResource("6_2f2pn")
+metadata/_edit_use_anchors_ = true
 
 [node name="FlowContainer" type="FlowContainer" parent="UI/Safe Zone/Battle Zone/Enemy Actions" unique_id=1388004689]
 layout_direction = 2
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.136
+anchor_right = 0.94125
+anchor_bottom = 0.99715906
+offset_top = 0.12799835
+offset_right = 0.039993286
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1, 0.9967448)
-alignment = 1
+alignment = 2
 last_wrap_alignment = 2
 vertical = true
+metadata/_edit_use_anchors_ = true
 
 [node name="EnemyAction" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=62146282 instance=ExtResource("6_2f2pn")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="EnemyAction5" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=986161645 instance=ExtResource("6_2f2pn")]
+[node name="EnemyAction2" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=1612884325 instance=ExtResource("6_2f2pn")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 88.0
 
-[node name="EnemyAction6" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=243183264 instance=ExtResource("6_2f2pn")]
+[node name="EnemyAction3" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=219478254 instance=ExtResource("6_2f2pn")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+
+[node name="EnemyAction4" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=594676065 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+
+[node name="EnemyAction5" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=543969566 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+
+[node name="EnemyAction6" parent="UI/Safe Zone/Battle Zone/Enemy Actions/FlowContainer" unique_id=1864256945 instance=ExtResource("6_2f2pn")]
+layout_mode = 2
+
+[node name="Enemy Ability" type="Panel" parent="UI/Safe Zone/Battle Zone/Enemy Actions" unique_id=450842848]
+self_modulate = Color(0.32544088, 0.3254409, 0.32544088, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Title" type="RichTextLabel" parent="UI/Safe Zone/Battle Zone/Enemy Actions/Enemy Ability" unique_id=487931813]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.425
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "BIGGEST ABILITY TITLE OF ALL TIME:"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Description" type="RichTextLabel" parent="UI/Safe Zone/Battle Zone/Enemy Actions/Enemy Ability" unique_id=550643923]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "biggest enemy ability description of all time"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel3" type="Panel" parent="UI/Safe Zone/Battle Zone" unique_id=659992774]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03448276
+anchor_top = 0.17857143
+anchor_right = 0.39655173
+anchor_bottom = 0.9620536
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Player Actions" type="Control" parent="UI/Safe Zone" unique_id=193009401 node_paths=PackedStringArray("deck_count", "hp_bar")]
 layout_mode = 1
@@ -204,6 +292,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="HP" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=2104587561]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 7.0
@@ -213,10 +302,12 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 value = 50.0
 rounded = true
+show_percentage = false
 
 [node name="Pass" type="Panel" parent="UI/Safe Zone/Player Actions/HBoxContainer" unique_id=1128567898]
 layout_mode = 2
@@ -378,9 +469,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[connection signal="on_drop_received" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_drop_received"]
-[connection signal="on_hover_enter" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_enter"]
-[connection signal="on_hover_exit" from="UI/Safe Zone/Battle Zone/Panel/DroppableComponent" to="UI/Safe Zone/Battle Zone" method="_droppable_on_hover_exit"]
 [connection signal="pressed" from="UI/Safe Zone/Player Actions/HBoxContainer/Pass/Button" to="UI/Safe Zone/Player Actions" method="_on_pass_pressed"]
 [connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2/Add Card" to="UI/Debug UI" method="_on_add_card_pressed"]
 [connection signal="pressed" from="UI/Debug UI/FoldableContainer/HBoxContainer/Card/HBoxContainer2/Remove Card" to="UI/Debug UI" method="_on_remove_card_pressed"]

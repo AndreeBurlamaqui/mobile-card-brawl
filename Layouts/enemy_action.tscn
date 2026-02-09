@@ -4,61 +4,68 @@
 [ext_resource type="Script" uid="uid://ba5ds7wyugip7" path="res://Scripts/Enemy/enemy_action_visual.gd" id="1_fxbct"]
 [ext_resource type="Texture2D" uid="uid://cplf8j0flpsag" path="res://Assets/Sprites/card_clubs_suit.png" id="2_fxbct"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bny8x"]
-expand_margin_left = 15.0
-expand_margin_top = 10.0
-expand_margin_right = 15.0
-expand_margin_bottom = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fxbct"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lwosb"]
-font_size = 30
+font_size = 20
 shadow_size = 10
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(0, 0)
 
-[node name="EnemyAction" type="MarginContainer" unique_id=62146282 node_paths=PackedStringArray("icon", "label", "droppable_area")]
-custom_minimum_size = Vector2(125, 0)
-offset_right = 108.0
-offset_bottom = 80.0
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 10
+[node name="EnemyAction" type="Panel" unique_id=1612884325 node_paths=PackedStringArray("icon", "label", "droppable_area")]
+custom_minimum_size = Vector2(75, 100)
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_fxbct")
 icon = NodePath("Simple Stat/Icon")
 label = NodePath("Simple Stat/Label")
 droppable_area = NodePath("Panel3/DroppableComponent")
 
 [node name="Panel3" type="Panel" parent="." unique_id=912098890]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bny8x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fxbct")
 
 [node name="DroppableComponent" type="Control" parent="Panel3" unique_id=2076531832]
 layout_mode = 1
-anchor_left = -0.1923077
-anchor_top = -0.16666667
-anchor_right = 1.1923077
-anchor_bottom = 1.1666666
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2gkm3")
-metadata/_edit_use_anchors_ = true
 
-[node name="Simple Stat" type="HBoxContainer" parent="." unique_id=481995462]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 2
+[node name="Simple Stat" type="BoxContainer" parent="." unique_id=1122186880]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -15
 alignment = 1
+vertical = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="Simple Stat" unique_id=1593575852]
 texture_filter = 1
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_horizontal = 4
+size_flags_vertical = 3
 texture = ExtResource("2_fxbct")
-expand_mode = 1
-stretch_mode = 4
+expand_mode = 5
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="Simple Stat" unique_id=1666790724]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 text = "88"
 label_settings = SubResource("LabelSettings_lwosb")
