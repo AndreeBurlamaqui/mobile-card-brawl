@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://7uqhgxefpkta"]
 
+[ext_resource type="Texture2D" uid="uid://butg2eb1xhhvf" path="res://Assets/UI/Transparent border/panel-transparent-border-013.png" id="1_pe43e"]
+[ext_resource type="Texture2D" uid="uid://ramus6c5pvc8" path="res://Assets/UI/Border/panel-border-010.png" id="2_fnqai"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_mtpr8"]
-font_size = 12
+font_size = 10
 
 [node name="Control" type="Control" unique_id=1340816512]
 custom_minimum_size = Vector2(50, 50)
@@ -20,7 +23,9 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Panel" type="Panel" parent="." unique_id=1644655402]
+[node name="Panel" type="TextureRect" parent="." unique_id=20045216]
+self_modulate = Color(0.18717614, 0.18717614, 0.18717614, 1)
+texture_filter = 1
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 anchors_preset = 15
@@ -28,17 +33,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_pe43e")
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="Panel" unique_id=1368932854]
-custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -8.0
+anchors_preset = -1
+anchor_left = 0.125
+anchor_top = 0.125
+anchor_right = 0.875
+anchor_bottom = 0.875
 grow_horizontal = 2
 grow_vertical = 2
 text = "ENCOUNTER"
@@ -46,3 +50,22 @@ label_settings = SubResource("LabelSettings_mtpr8")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+clip_text = true
+uppercase = true
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel" unique_id=2113290305]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+fill_mode = 7
+nine_patch_stretch = true
+stretch_margin_left = 20
+stretch_margin_top = 20
+stretch_margin_right = 20
+stretch_margin_bottom = 20
+texture_progress = ExtResource("2_fnqai")

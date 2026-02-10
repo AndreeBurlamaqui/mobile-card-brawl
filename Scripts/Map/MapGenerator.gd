@@ -298,4 +298,4 @@ func _on_line_layer_draw() -> void:
 					var end_pos = end_node.visual_instance.position + (end_node.visual_instance.size / 2.0)
 					
 					# TEMP: Straight line. Change to texture later
-					_line_layer.draw_line(start_pos, end_pos, Color.WHITE, 4.0, true)
+					_line_layer.draw_line(start_pos, end_pos, Color.DIM_GRAY, 2.0, true)
