@@ -21,6 +21,7 @@ class MapNodeData:
 	
 	enum ProgressState { BLOCKED, REACHED, COMPLETED}
 	var state: ProgressState = ProgressState.BLOCKED
+	var unlocked_by := Vector2i.MIN
 	
 	func _init(p):
 		grid_pos = p
@@ -85,6 +86,7 @@ func _generate_grid_data() -> void:
 	for reached_position in start_node.outgoing:
 		var reached_node = _grid_data[reached_position.x][reached_position.y]
 		reached_node.state = MapNodeData.ProgressState.REACHED
+		reached_node.unlocked_by = start_node.grid_pos
 	
 	# Final Boss
 	var boss_row = height - 1
@@ -313,7 +315,8 @@ func _on_line_layer_draw() -> void:
 					var line_color = Color.DIM_GRAY
 					var line_thick = 1.0
 					
-					if start_node.state == MapNodeData.ProgressState.COMPLETED:
+					var is_path_taken = end_node.unlocked_by == start_node.grid_pos
+					if is_path_taken and start_node.state == MapNodeData.ProgressState.COMPLETED:
 						match end_node.state:
 							MapNodeData.ProgressState.REACHED:
 								line_color = Color.DARK_GRAY
@@ -341,19 +344,21 @@ func _on_room_completed(room: MapNodeData) -> void:
 	var current_row = room.grid_pos.x
 	var width = data.grid_width
 	for col in range(width):
-		var sibling_node = _grid_data[current_row][col]
+		var sibling_node = _grid_data[current_row][col] as MapNodeData
 		# What was reached should be blocked due to the choice
-		if !sibling_node or sibling_node == room:
+		if !sibling_node or sibling_node == room or sibling_node.state != MapNodeData.ProgressState.REACHED:
 			continue
 		
 		sibling_node.state = MapNodeData.ProgressState.BLOCKED
+		sibling_node.unlocked_by = Vector2i.MIN # Clear to ensure
 		_setup_visual_appearance(sibling_node)
 	
 	# Update connection states
 	for target_pos in room.outgoing:
-		var next_node = _grid_data[target_pos.x][target_pos.y]
-		if !next_node:
+		var next_node = _grid_data[target_pos.x][target_pos.y] as MapNodeData
+		if !next_node or next_node.state != MapNodeData.ProgressState.BLOCKED:
 			continue
-			
+		
 		next_node.state = MapNodeData.ProgressState.REACHED
+		next_node.unlocked_by = room.grid_pos
 		_setup_visual_appearance(next_node)
