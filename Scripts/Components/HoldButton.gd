@@ -19,7 +19,7 @@ signal long_pressed
 var _current_hold_time: float = 0.0
 var _is_holding: bool = false
 var _fired: bool = false
-var _tween: Tween
+var _success_tween: Tween
 
 func _ready() -> void:
 	if not progress_bar:
@@ -36,6 +36,9 @@ func _ready() -> void:
 	mouse_exited.connect(_on_button_up) # Focus loss
 
 func _process(delta: float) -> void:
+	if _success_tween != null and _success_tween.is_running():
+		return
+	
 	if _is_holding:
 		if _fired:
 			progress_bar.value = 100
@@ -53,19 +56,22 @@ func _process(delta: float) -> void:
 		progress_bar.value = move_toward(progress_bar.value, 0, delta * 300)
 
 func _on_button_down() -> void:
+	if _success_tween != null and _success_tween.is_running():
+		await _success_tween.finished
+	
 	_is_holding = true
 	_fired = false
 	_current_hold_time = 0.0
-	
-	# Cancel any rewinding tweens
-	if _tween: _tween.kill()
 
 func _on_button_up() -> void:
+	if _success_tween != null and _success_tween.is_running():
+		await _success_tween.finished
+	
 	_is_holding = false
 	_current_hold_time = 0.0
 	
 	if instant_reset:
-		progress_bar.value = 0
+		_reset_progress()
 
 func _complete_hold() -> void:
 	_fired = true
@@ -77,14 +83,18 @@ func _complete_hold() -> void:
 	_play_success_animation()
 
 func _play_success_animation() -> void:
-	if _tween: _tween.kill()
-	_tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	if _success_tween: _success_tween.kill()
+	_success_tween = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	
 	# Scale up and down
 	pivot_offset = size / 2
 	scale = Vector2.ONE # Reset first
-	_tween.tween_property(self, "scale", success_scale, 0.1)
-	_tween.tween_property(self, "scale", Vector2.ONE, 0.2)
+	_success_tween.tween_property(self, "scale", success_scale, 0.1)
+	_success_tween.tween_property(self, "scale", Vector2.ONE, 0.2)
+	_success_tween.tween_callback(_reset_progress)
 
 func set_interactable(state: bool) -> void:
 	disabled = !state
+
+func _reset_progress() -> void:
+	progress_bar.value = 0
