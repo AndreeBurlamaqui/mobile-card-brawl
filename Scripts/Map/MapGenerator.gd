@@ -284,12 +284,12 @@ func _setup_visual_appearance(data: MapNodeData):
 	lbl.text = data.type
 	match data.type:
 		"START": vis.modulate = Color.GREEN
-		"BOSS": vis.modulate = Color.RED
-		"ELITE": vis.modulate = Color.DARK_MAGENTA
+		"BOSS": vis.modulate = Color.DARK_RED
+		"ELITE": vis.modulate = Color.CRIMSON
 		"CAMP": vis.modulate = Color.FOREST_GREEN
 		"CHEST": vis.modulate = Color.GOLD
-		"EVENT": vis.modulate = Color.VIOLET
-		"MOB": vis.modulate = Color.WHITE
+		"EVENT": vis.modulate = Color.SKY_BLUE
+		"MOB": vis.modulate = Color.LIGHT_CORAL
 	
 	var hold_button = vis.get_node("Panel/HoldButton") as HoldButton
 	hold_button.long_pressed.connect(set_room_progress.bind(data, MapNodeData.ProgressState.COMPLETED))
