@@ -85,3 +85,6 @@ func _play_success_animation() -> void:
 	scale = Vector2.ONE # Reset first
 	_tween.tween_property(self, "scale", success_scale, 0.1)
 	_tween.tween_property(self, "scale", Vector2.ONE, 0.2)
+
+func set_interactable(state: bool) -> void:
+	disabled = !state

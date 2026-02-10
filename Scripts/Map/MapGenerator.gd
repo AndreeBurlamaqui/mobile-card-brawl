@@ -19,7 +19,11 @@ class MapNodeData:
 	var outgoing: Array[Vector2i] = []
 	var visual_instance: Control = null
 	
-	func _init(p): grid_pos = p
+	enum ProgressState { BLOCKED, REACHED, COMPLETED}
+	var state: ProgressState = ProgressState.BLOCKED
+	
+	func _init(p):
+		grid_pos = p
 
 var _grid_data: Array = [] # 2D array [row][col]
 
@@ -70,12 +74,18 @@ func _generate_grid_data() -> void:
 	var start_col = randi() % width
 	var start_node = MapNodeData.new(Vector2i(0, start_col))
 	start_node.type = "START"
+	start_node.state = MapNodeData.ProgressState.COMPLETED
 	_grid_data[0][start_col] = start_node
 
 	# Create branches
 	for r in range(height - 2):
 		_connect_rooms(r)
-
+	
+	# After branches are created. Set those connected to Start as reached
+	for reached_position in start_node.outgoing:
+		var reached_node = _grid_data[reached_position.x][reached_position.y]
+		reached_node.state = MapNodeData.ProgressState.REACHED
+	
 	# Final Boss
 	var boss_row = height - 1
 	var boss_col = floor(width / 2.0)
@@ -224,7 +234,7 @@ func _spawn_visuals() -> void:
 	
 	for row in range(height):
 		for column in range(width):
-			var data = _grid_data[row][column]
+			var data: MapNodeData = _grid_data[row][column]
 			if not data: continue
 			
 			# Get the slot
@@ -242,7 +252,7 @@ func _spawn_visuals() -> void:
 			vis.position = center_pos + offset - (vis.size / 2.0)
 			
 			data.visual_instance = vis
-			_setup_visual_appearance(vis, data)
+			_setup_visual_appearance(data)
 
 func _get_position_jitter(row: int, column: int, width: int) -> Vector2:
 	# Don't jitter special nodes
@@ -268,8 +278,9 @@ func _get_position_jitter(row: int, column: int, width: int) -> Vector2:
 	
 	return Vector2(j_x, randf_range(_position_jitter * -1, _position_jitter))
 
-func _setup_visual_appearance(vis, data):
+func _setup_visual_appearance(data: MapNodeData):
 	# TEMP: We'll move it to the encounter visual later
+	var vis = data.visual_instance
 	var lbl = vis.get_node("Panel/Label")
 	lbl.text = data.type
 	match data.type:
@@ -280,6 +291,10 @@ func _setup_visual_appearance(vis, data):
 		"CHEST": vis.modulate = Color.GOLD
 		"EVENT": vis.modulate = Color.VIOLET
 		"MOB": vis.modulate = Color.WHITE
+	
+	var hold_button = vis.get_node("Panel/HoldButton") as HoldButton
+	hold_button.long_pressed.connect(set_room_progress.bind(data, MapNodeData.ProgressState.COMPLETED))
+	hold_button.set_interactable(data.state == MapNodeData.ProgressState.REACHED)
 
 func _on_line_layer_draw() -> void:
 	var height = data.grid_height
@@ -297,5 +312,51 @@ func _on_line_layer_draw() -> void:
 				if end_node and end_node.visual_instance:
 					var end_pos = end_node.visual_instance.position + (end_node.visual_instance.size / 2.0)
 					
+					# Default BLOCKED
+					var line_color = Color.DIM_GRAY
+					var line_thick = 1.0
+					
+					if start_node.state == MapNodeData.ProgressState.COMPLETED:
+						match end_node.state:
+							MapNodeData.ProgressState.REACHED:
+								line_color = Color.DARK_GRAY
+								line_thick = 2.0
+								
+							MapNodeData.ProgressState.COMPLETED:
+								line_color = Color.WHITE
+								line_thick = 5.0
+					
 					# TEMP: Straight line. Change to texture later
-					_line_layer.draw_line(start_pos, end_pos, Color.DIM_GRAY, 2.0, true)
+					_line_layer.draw_line(start_pos, end_pos, line_color, line_thick, true)
+
+func set_room_progress(target_room: MapNodeData, new_state: MapNodeData.ProgressState) -> void:
+	target_room.state = new_state
+	
+	if new_state == MapNodeData.ProgressState.COMPLETED:
+		_on_room_completed(target_room)
+	
+	#  Update visuals
+	_setup_visual_appearance(target_room)
+	_line_layer.queue_redraw()
+
+func _on_room_completed(room: MapNodeData) -> void:
+		# Update neighbors states
+	var current_row = room.grid_pos.x
+	var width = data.grid_width
+	for col in range(width):
+		var sibling_node = _grid_data[current_row][col]
+		# What was reached should be blocked due to the choice
+		if !sibling_node or sibling_node == room:
+			continue
+		
+		sibling_node.state = MapNodeData.ProgressState.BLOCKED
+		_setup_visual_appearance(sibling_node)
+	
+	# Update connection states
+	for target_pos in room.outgoing:
+		var next_node = _grid_data[target_pos.x][target_pos.y]
+		if !next_node:
+			continue
+			
+		next_node.state = MapNodeData.ProgressState.REACHED
+		_setup_visual_appearance(next_node)
