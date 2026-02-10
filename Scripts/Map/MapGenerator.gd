@@ -93,16 +93,28 @@ func _connect_rooms(row_idx: int) -> void:
 	var next_row = row_idx + 1
 	var width = data.grid_width
 	
+	# In case it's deadend: ensure that it's not going to break the path
+	var active_nodes_indices: Array[int] = []
+	for column in range(width):
+		if _grid_data[row_idx][column] != null:
+			active_nodes_indices.append(column)
+	# Pick one that will guarantee to never be a deadend
+	var guaranteed_survivor_col = active_nodes_indices.pick_random()
+	
 	for column in range(width):
 		var node = _grid_data[row_idx][column]
 		if not node: continue
 		
-		# Check deadends first if it's not the START
-		if row_idx > 0 and data.is_deadend():
+		# Check deadends first
+		var isnt_survivor = column != guaranteed_survivor_col # never should be deadend
+		var isnt_start = row_idx > 0 # if it's not the START
+		if isnt_survivor and isnt_start and data.is_deadend():
 			var side_targets = []
-			if column > 0 and _grid_data[row_idx][column-1] != null: # Left Neighbour
+			if column > 0 and _grid_data[row_idx][column-1] != null:
+				# Left Neighbour
 				side_targets.append(column - 1)
-			if column < width - 1 and _grid_data[row_idx][column+1] != null: # Right Neighbour
+			if column < width - 1 and _grid_data[row_idx][column+1] != null: 
+				# Right Neighbour
 				side_targets.append(column + 1)
 			
 			if side_targets.size() > 0:
