@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LevelMapData" format=3 uid="uid://bm3tmek2jik83"]
+
+[ext_resource type="Script" uid="uid://bm6gm25oqoo3r" path="res://Scripts/Map/LevelMapData.gd" id="1_ijd8u"]
+
+[resource]
+script = ExtResource("1_ijd8u")
+grid_height = 5
+metadata/_custom_type_script = "uid://bm6gm25oqoo3r"

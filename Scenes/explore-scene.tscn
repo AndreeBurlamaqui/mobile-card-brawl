@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ciqwks4fjsdxq"]
 
 [ext_resource type="Script" uid="uid://c2umtrtfxvmq5" path="res://Scripts/Map/MapGenerator.gd" id="1_8udh6"]
+[ext_resource type="Resource" uid="uid://bm3tmek2jik83" path="res://Scripts/Map/Resources/EasyMap.tres" id="2_4ooxk"]
 [ext_resource type="PackedScene" uid="uid://7uqhgxefpkta" path="res://Layouts/encounter_room_node.tscn" id="2_rnxxt"]
 
 [node name="Node2D" type="Node2D" unique_id=387184843]
@@ -16,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Map" type="Control" parent="CanvasLayer/Safe zone" unique_id=1528006353 node_paths=PackedStringArray("scroller", "line_layer", "rooms_layer", "grid_slots")]
+[node name="Map" type="Control" parent="CanvasLayer/Safe zone" unique_id=1528006353 node_paths=PackedStringArray("_scroller", "_line_layer", "_rooms_layer", "_grid_slots")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,11 +27,11 @@ offset_right = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8udh6")
-position_jitter = 35.0
-scroller = NodePath("ScrollContainer")
-line_layer = NodePath("ScrollContainer/Content Container/Line")
-rooms_layer = NodePath("ScrollContainer/Content Container/Encounter Rooms")
-grid_slots = NodePath("ScrollContainer/Content Container/Placement Slots")
+data = ExtResource("2_4ooxk")
+_scroller = NodePath("ScrollContainer")
+_line_layer = NodePath("ScrollContainer/Content Container/Line")
+_rooms_layer = NodePath("ScrollContainer/Content Container/Encounter Rooms")
+_grid_slots = NodePath("ScrollContainer/Content Container/Placement Slots")
 _encounter_node = ExtResource("2_rnxxt")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Safe zone/Map" unique_id=911298174]
