@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7uqhgxefpkta"]
 
 [ext_resource type="Texture2D" uid="uid://butg2eb1xhhvf" path="res://Assets/UI/Transparent border/panel-transparent-border-013.png" id="1_pe43e"]
+[ext_resource type="Script" uid="uid://bfg1kqknaau7j" path="res://Scripts/Components/HoldButton.gd" id="2_01hcw"]
 [ext_resource type="Texture2D" uid="uid://ramus6c5pvc8" path="res://Assets/UI/Border/panel-border-010.png" id="2_fnqai"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mtpr8"]
@@ -54,7 +55,20 @@ clip_text = true
 uppercase = true
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel" unique_id=2113290305]
+[node name="HoldButton" type="TextureButton" parent="Panel" unique_id=800267456 node_paths=PackedStringArray("progress_bar")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_01hcw")
+hold_time = 0.75
+instant_reset = false
+progress_bar = NodePath("TextureProgressBar")
+metadata/_custom_type_script = "uid://bfg1kqknaau7j"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel/HoldButton" unique_id=2113290305]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
