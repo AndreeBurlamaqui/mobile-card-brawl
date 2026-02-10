@@ -92,6 +92,7 @@ func _connect_rooms(row_idx: int) -> void:
 	# It'll either connect to the next (upwards) or the neighbours (sides)
 	var next_row = row_idx + 1
 	var width = data.grid_width
+	
 	for column in range(width):
 		var node = _grid_data[row_idx][column]
 		if not node: continue
@@ -99,9 +100,9 @@ func _connect_rooms(row_idx: int) -> void:
 		# Check deadends first if it's not the START
 		if row_idx > 0 and data.is_deadend():
 			var side_targets = []
-			if column > 0 and _grid_data[row_idx][column-1] != null:
+			if column > 0 and _grid_data[row_idx][column-1] != null: # Left Neighbour
 				side_targets.append(column - 1)
-			if column < width - 1 and _grid_data[row_idx][column+1] != null:
+			if column < width - 1 and _grid_data[row_idx][column+1] != null: # Right Neighbour
 				side_targets.append(column + 1)
 			
 			if side_targets.size() > 0:
@@ -112,9 +113,27 @@ func _connect_rooms(row_idx: int) -> void:
 		
 		# Define valid moves (Left, Center, Right)
 		var targets = []
-		if column > 0: targets.append(column - 1)
+		if column > 0:
+			# Check if can go left, to not cross connection lines 
+			var crossing: bool = false
+			
+			var left_neighbor = _grid_data[row_idx][column - 1]
+			if left_neighbor:
+				for connection in left_neighbor.outgoing:
+					if connection.x == next_row and connection.y == column:
+						crossing = true
+						break
+			
+			if not crossing:
+				targets.append(column - 1)
+		
+		# No need to check crossing when going center
 		targets.append(column)
-		if column < width - 1: targets.append(column + 1)
+		
+		# No need to check right. The neighbor will be checking if so
+		if column < width - 1: 
+			targets.append(column + 1)
+		
 		targets.shuffle()
 		
 		# TODO: Make this be a data from the level
