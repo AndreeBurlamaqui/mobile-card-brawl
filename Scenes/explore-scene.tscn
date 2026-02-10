@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://ciqwks4fjsdxq"]
+
+[ext_resource type="Script" uid="uid://c2umtrtfxvmq5" path="res://Scripts/Map/MapGenerator.gd" id="1_8udh6"]
+[ext_resource type="PackedScene" uid="uid://7uqhgxefpkta" path="res://Layouts/encounter_room_node.tscn" id="2_rnxxt"]
+
+[node name="Node2D" type="Node2D" unique_id=387184843]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=915328318]
+
+[node name="Safe zone" type="Control" parent="CanvasLayer" unique_id=1333655279]
+layout_mode = 3
+anchor_top = 0.08888889
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Map" type="Control" parent="CanvasLayer/Safe zone" unique_id=1528006353 node_paths=PackedStringArray("scroller", "line_layer", "rooms_layer", "grid_slots")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8udh6")
+position_jitter = 15.0
+scroller = NodePath("ScrollContainer")
+line_layer = NodePath("ScrollContainer/Content Container/Line")
+rooms_layer = NodePath("ScrollContainer/Content Container/Encounter Rooms")
+grid_slots = NodePath("ScrollContainer/Content Container/Placement Slots")
+_encounter_node = ExtResource("2_rnxxt")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Safe zone/Map" unique_id=911298174]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Safe zone/Map" unique_id=1455846004]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="Content Container" type="MarginContainer" parent="CanvasLayer/Safe zone/Map/ScrollContainer" unique_id=1017566071]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="Line" type="Control" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container" unique_id=1109478785]
+layout_mode = 2
+
+[node name="Placement Slots" type="GridContainer" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container" unique_id=1645499584]
+z_index = 1
+layout_mode = 2
+theme_override_constants/h_separation = 45
+theme_override_constants/v_separation = 75
+columns = 5
+
+[node name="Control" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1340816512 instance=ExtResource("2_rnxxt")]
+layout_mode = 2
+
+[node name="Control2" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1832408672 instance=ExtResource("2_rnxxt")]
+layout_mode = 2
+
+[node name="Control3" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1974568837 instance=ExtResource("2_rnxxt")]
+layout_mode = 2
+
+[node name="Control4" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=111573023 instance=ExtResource("2_rnxxt")]
+layout_mode = 2
+
+[node name="Control5" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=738523958 instance=ExtResource("2_rnxxt")]
+layout_mode = 2
+
+[node name="Control6" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1038104974 instance=ExtResource("2_rnxxt")]
+layout_mode = 2
+
+[node name="Encounter Rooms" type="Control" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container" unique_id=5520200]
+z_index = 2
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Safe zone" unique_id=1741180482]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
