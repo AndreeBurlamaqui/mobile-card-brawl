@@ -145,29 +145,59 @@ func _create_slots() -> void:
 			grid_slots.add_child(spacer)
 
 func _spawn_visuals() -> void:
-	# Now we place the REAL buttons on top of the slots
 	for r in range(grid_height):
 		for c in range(grid_width):
 			var data = _grid_data[r][c]
 			if not data: continue
 			
-			# The skeleton index is inverted (height - 1 - r) * width + c
+			# Get the slot
 			var anchor_idx = (grid_height - 1 - r) * grid_width + c
 			var anchor = grid_slots.get_child(anchor_idx)
 			
-			# Add jittering to make it look less grid
-			var center_pos = anchor.position + (anchor.size / 2.0)
+			# Add jitter offset to look less like a grid
 			var offset = Vector2.ZERO
 			if data.type != "START" and data.type != "BOSS":
-				offset = Vector2(
-					randf_range(-position_jitter, position_jitter),
-					randf_range(-position_jitter, position_jitter)
-				)
+				# Start with full range
+				var min_x = -position_jitter
+				var max_x = position_jitter
+				
+				# Ensure it'll not go outside viewport
+				if c == 0:
+					# First column: Never go left of center (0)
+					min_x = 0.0
+				if c == grid_width - 1:
+					# Last column: Never go right of center (0)
+					max_x = 0.0
+				
+				# Ensure it'll not overlap with other rooms
+				if c > 0 and _grid_data[r][c-1] != null:
+					# If neighbor to the left, try to stay to the right (+5)
+					min_x = max(min_x, 5.0)
+				if c < grid_width - 1 and _grid_data[r][c+1] != null:
+					# If neighbor to the right, try to stay to the left (-5)
+					max_x = min(max_x, -5.0)
+				
+				var jitter_x = 0.0
+				
+				if min_x < max_x:
+					# If we are squeezed (e.g., Wall says >0 but Neighbor says <-5),
+					# we default to 0 (Center) to be safe.
+					jitter_x = randf_range(min_x, max_x)
+				else:
+					# The constraints conflict or are tight (e.g., between wall and neighbor)
+					# Just pick the average or 0
+					jitter_x = lerp(min_x, max_x, 0.5)
+				
+				var jitter_y = randf_range(-position_jitter, position_jitter)
+				offset = Vector2(jitter_x, jitter_y)
 			
 			# Finish setup
+			var center_pos = anchor.position + (anchor.size / 2.0)
 			var vis = _encounter_node.instantiate()
 			rooms_layer.add_child(vis)
+			
 			vis.position = center_pos + offset - (vis.size / 2.0)
+			
 			data.visual_instance = vis
 			_setup_visual_appearance(vis, data)
 
