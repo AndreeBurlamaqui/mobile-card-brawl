@@ -119,18 +119,15 @@ func _connect_rooms(row_idx: int) -> void:
 		var isnt_survivor = column != guaranteed_survivor_col # never should be deadend
 		var isnt_start = row_idx > 0 # if it's not the START
 		if isnt_survivor and isnt_start and data.is_deadend():
-			var side_targets = []
-			if column > 0 and _grid_data[row_idx][column-1] != null:
-				# Left Neighbour
-				side_targets.append(column - 1)
-			if column < width - 1 and _grid_data[row_idx][column+1] != null: 
-				# Right Neighbour
-				side_targets.append(column + 1)
+			# Go towards the survivor
+			var direction = sign(guaranteed_survivor_col - column) 
+			var target_neighbor_col = column + direction
 			
-			if side_targets.size() > 0:
-				var target_c = side_targets.pick_random()
-				# Connect to neighbor in SAME row
-				node.outgoing.append(Vector2i(row_idx, target_c))
+			# Check if that specific neighbor exists
+			var neighbor = _grid_data[row_idx][target_neighbor_col]
+			
+			if neighbor != null:
+				node.outgoing.append(Vector2i(row_idx, target_neighbor_col))
 				continue # Valid deadend, no upward path
 		
 		# Define valid moves (Left, Center, Right)
