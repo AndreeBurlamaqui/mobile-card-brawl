@@ -21,10 +21,6 @@ func _init() -> void:
 	instance = self
 
 func start_battle(against: EnemyData) -> void:
-	## Clear current enemy (if any)
-	#if enemy != null:
-		#
-	
 	# Setup new enemy and actions
 	enemy = against
 	enemy_controller.setup(enemy)

@@ -33,10 +33,19 @@ func _ready() -> void:
 	#resized.connect(func(): reorder_hand())
 
 func setup(new_deck: Array[CardData]) -> void:
+	if _cards:
+		var cards_to_remove = _cards.duplicate() # Cache in case we start another battle while removing
+		# Clear old cards if any
+		for old_card in cards_to_remove:
+			remove_card(old_card)
+	
 	_deck = new_deck
 	_deck.shuffle()
 	
 	for i in range(5): # Initial card hand amount
+		if _deck != new_deck:
+			# We started a new battle while giving new cards
+			return
 		add_next_deck_card()
 		await get_tree().create_timer(0.15).timeout
 
