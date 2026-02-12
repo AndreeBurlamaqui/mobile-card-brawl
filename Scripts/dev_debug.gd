@@ -17,6 +17,7 @@ func _init() -> void:
 	instance = self
 
 func _ready() -> void:
+	$FoldableContainer.fold()
 	_setup_enemies()
 
 #region CARD ACTIONS
@@ -71,4 +72,17 @@ func _setup_enemies():
 
 func _start_battle(enemy: EnemyData):
 	battle_controller.start_battle(enemy)
+#endregion
+
+
+#region BATTLE STATES
+
+func _on_end_win_pressed() -> void:
+	$FoldableContainer.fold()
+	GameManager.instance.end_battle(battle_controller.enemy, true)
+
+func _on_end_lose_pressed() -> void:
+	$FoldableContainer.fold()
+	GameManager.instance.end_battle(battle_controller.enemy, false)
+
 #endregion

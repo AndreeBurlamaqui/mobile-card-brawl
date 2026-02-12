@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bdsqxds6v65ia"]
+
+[ext_resource type="Script" uid="uid://gncq15j7186x" path="res://Scripts/game_manager.gd" id="1_0e3vx"]
+[ext_resource type="PackedScene" uid="uid://4mvtnmqrhhy7" path="res://Scenes/battle-scene.tscn" id="1_pu3va"]
+[ext_resource type="PackedScene" uid="uid://ciqwks4fjsdxq" path="res://Scenes/explore-scene.tscn" id="2_0e3vx"]
+
+[node name="Game" type="Node2D" unique_id=1048441645 node_paths=PackedStringArray("map_scene", "battle_scene")]
+script = ExtResource("1_0e3vx")
+map_scene = NodePath("Map Scene")
+battle_scene = NodePath("Battle Scene")
+
+[node name="Map Scene" parent="." unique_id=387184843 instance=ExtResource("2_0e3vx")]
+visible = false
+
+[node name="Battle Scene" parent="." unique_id=370648351 instance=ExtResource("1_pu3va")]
+visible = false

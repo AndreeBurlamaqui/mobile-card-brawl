@@ -1,4 +1,4 @@
-extends Control
+class_name MapGenerator extends Control
 
 @export_category("Map Settings")
 @export var data: LevelMapData
@@ -18,13 +18,25 @@ class MapNodeData:
 	var type: String = "ROOM" # TEMP
 	var outgoing: Array[Vector2i] = []
 	var visual_instance: Control = null
+	var controller: MapGenerator
 	
 	enum ProgressState { BLOCKED, REACHED, COMPLETED}
 	var state: ProgressState = ProgressState.BLOCKED
 	var unlocked_by := Vector2i.MIN
 	
-	func _init(p):
-		grid_pos = p
+	func _init(_map_generator: MapGenerator, _position: Vector2i):
+		controller = _map_generator
+		grid_pos = _position
+	
+	func set_room_progress(new_state: MapNodeData.ProgressState) -> void:
+		state = new_state
+		
+		if state == MapNodeData.ProgressState.COMPLETED:
+			controller._on_room_completed(self)
+		
+		#  Update visuals
+		controller._setup_visual_appearance(self)
+		controller._line_layer.queue_redraw()
 
 var _grid_data: Array = [] # 2D array [row][col]
 
@@ -73,7 +85,7 @@ func _generate_grid_data() -> void:
 
 	# Pick a random column for the single start node
 	var start_col = randi() % width
-	var start_node = MapNodeData.new(Vector2i(0, start_col))
+	var start_node = MapNodeData.new(self, Vector2i(0, start_col))
 	start_node.type = "START"
 	start_node.state = MapNodeData.ProgressState.COMPLETED
 	_grid_data[0][start_col] = start_node
@@ -91,7 +103,7 @@ func _generate_grid_data() -> void:
 	# Final Boss
 	var boss_row = height - 1
 	var boss_col = floor(width / 2.0)
-	var boss = MapNodeData.new(Vector2i(boss_row, boss_col))
+	var boss = MapNodeData.new(self, Vector2i(boss_row, boss_col))
 	boss.type = "BOSS"
 	_grid_data[boss_row][boss_col] = boss
 	
@@ -173,7 +185,7 @@ func _connect_rooms(row_idx: int) -> void:
 			
 			if _grid_data[next_row][t_col] == null:
 				# Create node if it doesn't exist yet
-				_grid_data[next_row][t_col] = MapNodeData.new(t_pos)
+				_grid_data[next_row][t_col] = MapNodeData.new(self, t_pos)
 
 func _assign_room_types() -> void:
 	var height = data.grid_height
@@ -292,7 +304,8 @@ func _setup_visual_appearance(data: MapNodeData):
 		"MOB": vis.modulate = Color.LIGHT_CORAL
 	
 	var hold_button = vis.get_node("Panel/HoldButton") as HoldButton
-	hold_button.long_pressed.connect(set_room_progress.bind(data, MapNodeData.ProgressState.COMPLETED))
+	#hold_button.long_pressed.connect(set_room_progress.bind(data, MapNodeData.ProgressState.COMPLETED))
+	hold_button.long_pressed.connect(GameManager.instance.start_battle.bind(data))
 	hold_button.set_interactable(data.state == MapNodeData.ProgressState.REACHED)
 
 func _on_line_layer_draw() -> void:
@@ -328,16 +341,6 @@ func _on_line_layer_draw() -> void:
 					
 					# TEMP: Straight line. Change to texture later
 					_line_layer.draw_line(start_pos, end_pos, line_color, line_thick, true)
-
-func set_room_progress(target_room: MapNodeData, new_state: MapNodeData.ProgressState) -> void:
-	target_room.state = new_state
-	
-	if new_state == MapNodeData.ProgressState.COMPLETED:
-		_on_room_completed(target_room)
-	
-	#  Update visuals
-	_setup_visual_appearance(target_room)
-	_line_layer.queue_redraw()
 
 func _on_room_completed(room: MapNodeData) -> void:
 		# Update neighbors states

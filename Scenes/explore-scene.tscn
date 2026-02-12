@@ -4,11 +4,9 @@
 [ext_resource type="Resource" uid="uid://bm3tmek2jik83" path="res://Scripts/Map/Resources/EasyMap.tres" id="2_4ooxk"]
 [ext_resource type="PackedScene" uid="uid://7uqhgxefpkta" path="res://Layouts/encounter_room_node.tscn" id="2_rnxxt"]
 
-[node name="Node2D" type="Node2D" unique_id=387184843]
+[node name="Map Scene" type="CanvasLayer" unique_id=1859201820]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=915328318]
-
-[node name="Safe zone" type="Control" parent="CanvasLayer" unique_id=1333655279]
+[node name="Safe zone" type="Control" parent="." unique_id=1333655279]
 layout_mode = 3
 anchor_top = 0.08888889
 anchor_right = 1.0
@@ -17,7 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Map" type="Control" parent="CanvasLayer/Safe zone" unique_id=1528006353 node_paths=PackedStringArray("_scroller", "_line_layer", "_rooms_layer", "_grid_slots")]
+[node name="Map" type="Control" parent="Safe zone" unique_id=1528006353 node_paths=PackedStringArray("_scroller", "_line_layer", "_rooms_layer", "_grid_slots")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +30,7 @@ _rooms_layer = NodePath("ScrollContainer/Content Container/Encounter Rooms")
 _grid_slots = NodePath("ScrollContainer/Content Container/Placement Slots")
 _encounter_node = ExtResource("2_rnxxt")
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Safe zone/Map" unique_id=911298174]
+[node name="Panel" type="Panel" parent="Safe zone/Map" unique_id=911298174]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -41,7 +39,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Safe zone/Map" unique_id=1455846004]
+[node name="ScrollContainer" type="ScrollContainer" parent="Safe zone/Map" unique_id=1455846004]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,7 +48,7 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="Content Container" type="MarginContainer" parent="CanvasLayer/Safe zone/Map/ScrollContainer" unique_id=1017566071]
+[node name="Content Container" type="MarginContainer" parent="Safe zone/Map/ScrollContainer" unique_id=1017566071]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -59,39 +57,39 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 25
 
-[node name="Line" type="Control" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container" unique_id=1109478785]
+[node name="Line" type="Control" parent="Safe zone/Map/ScrollContainer/Content Container" unique_id=1109478785]
 layout_mode = 2
 
-[node name="Placement Slots" type="GridContainer" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container" unique_id=1645499584]
+[node name="Placement Slots" type="GridContainer" parent="Safe zone/Map/ScrollContainer/Content Container" unique_id=1645499584]
 z_index = 1
 layout_mode = 2
 theme_override_constants/h_separation = 45
 theme_override_constants/v_separation = 75
 columns = 5
 
-[node name="Control" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1340816512 instance=ExtResource("2_rnxxt")]
+[node name="Control" parent="Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1340816512 instance=ExtResource("2_rnxxt")]
 layout_mode = 2
 
-[node name="Control2" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1832408672 instance=ExtResource("2_rnxxt")]
+[node name="Control2" parent="Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1832408672 instance=ExtResource("2_rnxxt")]
 layout_mode = 2
 
-[node name="Control3" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1974568837 instance=ExtResource("2_rnxxt")]
+[node name="Control3" parent="Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1974568837 instance=ExtResource("2_rnxxt")]
 layout_mode = 2
 
-[node name="Control4" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=111573023 instance=ExtResource("2_rnxxt")]
+[node name="Control4" parent="Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=111573023 instance=ExtResource("2_rnxxt")]
 layout_mode = 2
 
-[node name="Control5" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=738523958 instance=ExtResource("2_rnxxt")]
+[node name="Control5" parent="Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=738523958 instance=ExtResource("2_rnxxt")]
 layout_mode = 2
 
-[node name="Control6" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1038104974 instance=ExtResource("2_rnxxt")]
+[node name="Control6" parent="Safe zone/Map/ScrollContainer/Content Container/Placement Slots" unique_id=1038104974 instance=ExtResource("2_rnxxt")]
 layout_mode = 2
 
-[node name="Encounter Rooms" type="Control" parent="CanvasLayer/Safe zone/Map/ScrollContainer/Content Container" unique_id=5520200]
+[node name="Encounter Rooms" type="Control" parent="Safe zone/Map/ScrollContainer/Content Container" unique_id=5520200]
 z_index = 2
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Safe zone" unique_id=1741180482]
+[node name="Panel" type="Panel" parent="Safe zone" unique_id=1741180482]
 visible = false
 layout_mode = 1
 anchors_preset = 15
