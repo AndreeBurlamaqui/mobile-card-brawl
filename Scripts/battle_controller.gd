@@ -1,4 +1,4 @@
-class_name BattleController extends Control
+class_name BattleController extends CanvasLayer
 
 enum State { PLAYER_TURN, ENEMY_TURN, VICTORY, DEFEAT }
 

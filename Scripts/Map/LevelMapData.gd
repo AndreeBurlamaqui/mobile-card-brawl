@@ -18,6 +18,7 @@ class_name LevelMapData extends Resource
 @export_group("Enemy Specifics")
 ## If a room is a MOB, chance it becomes an ELITE
 @export_range(0.0, 100.0) var _elite_chance: float = 15
+@export var _possible_enemies : Array[EnemyData] = []
 
 # Helper to get a random room type based on weights
 func pick_weighted_room_type() -> String:
@@ -39,3 +40,6 @@ func is_deadend() -> bool:
 
 func is_elite() -> bool:
 	return randf() < (_elite_chance / 100.0)
+
+func get_random_enemy() -> EnemyData:
+	return _possible_enemies.pick_random()

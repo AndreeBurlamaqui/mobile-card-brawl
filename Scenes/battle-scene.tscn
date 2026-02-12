@@ -27,7 +27,10 @@ shadow_offset = Vector2(0, 0)
 [sub_resource type="LabelSettings" id="LabelSettings_0wh4h"]
 font_size = 40
 
-[node name="Battle Scene" type="CanvasLayer" unique_id=897005641]
+[node name="Battle Scene" type="CanvasLayer" unique_id=897005641 node_paths=PackedStringArray("enemy_controller", "player_controller")]
+script = ExtResource("3_cp2na")
+enemy_controller = NodePath("Safe Zone/Battle Zone/Enemy Actions")
+player_controller = NodePath("Safe Zone/Hand")
 metadata/_edit_vertical_guides_ = [-504.0]
 
 [node name="Safe Zone" type="Control" parent="." unique_id=1823134308]
@@ -81,7 +84,7 @@ offset_top = -50.0
 offset_right = 23.0
 offset_bottom = 25.0
 
-[node name="Battle Zone" type="Control" parent="Safe Zone" unique_id=1031509843 node_paths=PackedStringArray("enemy_controller", "player_controller")]
+[node name="Battle Zone" type="Control" parent="Safe Zone" unique_id=1031509843]
 layout_mode = 1
 anchor_left = 0.016666668
 anchor_top = -0.036585364
@@ -89,9 +92,6 @@ anchor_right = 0.98333335
 anchor_bottom = 0.64634144
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("3_cp2na")
-enemy_controller = NodePath("Enemy Actions")
-player_controller = NodePath("../Hand")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="Safe Zone/Battle Zone" unique_id=203523270]
@@ -326,7 +326,7 @@ anchor_left = 0.5
 anchor_right = 0.5
 grow_horizontal = 2
 script = ExtResource("1_8amj3")
-battle_controller = NodePath("../Safe Zone/Battle Zone")
+battle_controller = NodePath("..")
 hand_reference = NodePath("../Safe Zone/Hand")
 card_types = Array[ExtResource("9_x04n6")]([ExtResource("10_5jsw1"), ExtResource("11_3gloy"), ExtResource("12_tgkur"), ExtResource("13_xru1l")])
 enemy_list = Array[ExtResource("14_0wh4h")]([ExtResource("15_w2bj3"), ExtResource("16_e63i4"), ExtResource("17_5cecb")])
