@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://ctxt18qd4dm3c"]
+
+[ext_resource type="Shader" uid="uid://rv4t37hcee8h" path="res://Shaders/dissolve.gdshader" id="1_v2cqt"]
+[ext_resource type="Texture2D" uid="uid://dxhingju1egdm" path="res://Assets/Textures/Triangle_PunBlackBG.png" id="2_kqksy"]
+[ext_resource type="Shader" uid="uid://ctyt6un3qai1t" path="res://Shaders/distort.gdshader" id="3_5qjst"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rr55v"]
+shader = ExtResource("1_v2cqt")
+shader_parameter/dissolve_texture = ExtResource("2_kqksy")
+shader_parameter/repeat_texture = true
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/dissolve_value = 0.0
+shader_parameter/burn_size = 0.2610000123975
+shader_parameter/burn_color = Color(0.3019608, 0.6666667, 0, 1)
+shader_parameter/flicker_speed = 10.000000475
+shader_parameter/flicker_intensity = 1.0
+shader_parameter/transparency_softness = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jceco"]
+shader = ExtResource("3_5qjst")
+shader_parameter/glitch_intensity = 0.1730000082175
+shader_parameter/block_size = 20.0
+
+[node name="Fullscreen" type="Control" unique_id=768692173]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=245618688]
+layer = 100
+
+[node name="Transition" type="Panel" parent="CanvasLayer" unique_id=134038556]
+visible = false
+material = SubResource("ShaderMaterial_rr55v")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Distortion" type="ColorRect" parent="CanvasLayer" unique_id=409141832]
+material = SubResource("ShaderMaterial_jceco")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
