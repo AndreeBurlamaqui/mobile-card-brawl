@@ -1,4 +1,4 @@
-class_name BattleDebug extends Node
+class_name BattleDebug extends CanvasItem
 
 static var instance: BattleDebug
 @export var battle_controller: BattleController
@@ -17,8 +17,12 @@ func _init() -> void:
 	instance = self
 
 func _ready() -> void:
-	$FoldableContainer.fold()
 	_setup_enemies()
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_VISIBILITY_CHANGED:
+			$FoldableContainer.fold()
 
 #region CARD ACTIONS
 func _on_clear_pressed() -> void:
@@ -78,11 +82,9 @@ func _start_battle(enemy: EnemyData):
 #region BATTLE STATES
 
 func _on_end_win_pressed() -> void:
-	$FoldableContainer.fold()
-	GameManager.instance.end_battle(battle_controller.enemy, true)
+	battle_controller.end_battle(true)
 
 func _on_end_lose_pressed() -> void:
-	$FoldableContainer.fold()
-	GameManager.instance.end_battle(battle_controller.enemy, false)
+	battle_controller.end_battle(false)
 
 #endregion

@@ -3,21 +3,23 @@ class_name EnemyActionController extends Panel
 @export var action_container: FlowContainer
 @export var action_template: PackedScene
 
-var _current_actions: Array[EnemyActionRuntime] = []
+var current_actions: Array[EnemyActionRuntime] = []
+
+signal every_challenge_cleared
 
 func setup(enemy: EnemyData):
 	# Remove design placeholders
 	for child in action_container.get_children():
 		child.queue_free()
 	
-	_current_actions.clear()
+	current_actions.clear()
 	for action in enemy.actions:
 		_add_action(action)
 
 func _add_action(data: EnemyActionData):
 	# Prepare runtime data
 	var runtime_data = EnemyActionRuntime.new(data)
-	_current_actions.append(runtime_data)
+	current_actions.append(runtime_data)
 	
 	# Prepare visual side
 	var new_action = action_template.instantiate() as EnemyActionVisual
@@ -51,18 +53,22 @@ func _on_action_targeted(draggable: DraggableComponent, action: EnemyActionRunti
 	action.take_hit(player_damage)
 
 func apply_every_penalties() -> void:
-	if _current_actions.is_empty():
+	if current_actions.is_empty():
 		return
 	
-	for action in _current_actions:
+	for action in current_actions:
 		if action.is_cleared():
 			continue
 		
 		action.apply_penalty()
+		
+		if GameManager.instance.current_scene != GameManager.Scene.BATTLE:
+			return
+		
 		await get_tree().create_timer(1).timeout
 
 func is_round_cleared() -> bool:
-	for action in _current_actions:
+	for action in current_actions:
 		if not action.is_cleared():
 			return false
 	return true
