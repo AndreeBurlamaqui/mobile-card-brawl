@@ -343,8 +343,14 @@ func _on_line_layer_draw() -> void:
 					_line_layer.draw_line(start_pos, end_pos, line_color, line_thick, true)
 
 func _on_room_completed(room: MapNodeData) -> void:
-		# Update neighbors states
 	var current_row = room.grid_pos.x
+	if current_row >= data.grid_height - 1:
+		# Boss room. Meaning the game is complete
+		# TODO: Advance to next map
+		GameManager.instance.restart()
+		return
+	
+	# Update neighbors states
 	var width = data.grid_width
 	for col in range(width):
 		var sibling_node = _grid_data[current_row][col] as MapNodeData
