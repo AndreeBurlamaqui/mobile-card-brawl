@@ -7,6 +7,11 @@ static var instance: BattleController
 @export var enemy_controller: EnemyActionController
 @export var player_controller: Hand
 
+@export_category("UI")
+@export var alias_label: RichTextLabel
+@export var enemy_hp: ProgressBar
+var _hp_tween: Tween
+
 var current_state: State = State.PLAYER_TURN
 signal state_change(old_state: State, new_state: State)
 
@@ -27,6 +32,11 @@ func start_battle(against: EnemyData) -> void:
 	enemy_controller.setup(enemy)
 	for action in enemy_controller.current_actions:
 		action.challenge_cleared.connect(_on_enemy_challenge_cleared)
+	alias_label.text = str(enemy.alias)
+	var enemy_action_count = enemy.actions.size()
+	enemy_hp.min_value = 0
+	enemy_hp.max_value = enemy_action_count
+	_update_enemy_bar(enemy.actions.size())
 	
 	# Setup player
 	var deck : Array[CardData] = BattleDebug.instance.get_random_deck(30) # TEMP
@@ -71,6 +81,18 @@ func end_battle(is_win: bool) -> void:
 	GameManager.instance.end_battle(enemy, is_win)
 
 func _on_enemy_challenge_cleared() -> void:
+	var left_challenges = enemy_controller.get_challenge_left()
+	await _update_enemy_bar(left_challenges)
+	
 	# Check if game should finish
-	if enemy_controller.is_round_cleared():
+	if left_challenges <= 0:
 		end_battle(true)
+
+func _update_enemy_bar(left_challenges: int) -> void:
+	if _hp_tween != null and _hp_tween.is_running():
+		_hp_tween.kill()
+	
+	_hp_tween = create_tween()
+	_hp_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BOUNCE)
+	_hp_tween.tween_property(enemy_hp, "value", left_challenges, 0.25)
+	await _hp_tween.finished

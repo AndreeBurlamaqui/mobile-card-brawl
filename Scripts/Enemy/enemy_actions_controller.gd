@@ -67,8 +67,12 @@ func apply_every_penalties() -> void:
 		
 		await get_tree().create_timer(1).timeout
 
-func is_round_cleared() -> bool:
+func get_challenge_left() -> int:
+	var left: int = 0;
 	for action in current_actions:
 		if not action.is_cleared():
-			return false
-	return true
+			left += 1
+	return left
+
+func is_round_cleared() -> bool: 
+	return get_challenge_left() <= 0

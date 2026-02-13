@@ -27,10 +27,12 @@ shadow_offset = Vector2(0, 0)
 [sub_resource type="LabelSettings" id="LabelSettings_0wh4h"]
 font_size = 40
 
-[node name="Battle Scene" type="CanvasLayer" unique_id=897005641 node_paths=PackedStringArray("enemy_controller", "player_controller")]
+[node name="Battle Scene" type="CanvasLayer" unique_id=897005641 node_paths=PackedStringArray("enemy_controller", "player_controller", "alias_label", "enemy_hp")]
 script = ExtResource("3_cp2na")
 enemy_controller = NodePath("Safe Zone/Battle Zone/Enemy Actions")
 player_controller = NodePath("Safe Zone/Hand")
+alias_label = NodePath("Safe Zone/Battle Zone/Panel2/RichTextLabel")
+enemy_hp = NodePath("Safe Zone/Battle Zone/Panel2/ProgressBar")
 metadata/_edit_vertical_guides_ = [-504.0]
 
 [node name="Safe Zone" type="Control" parent="." unique_id=1823134308]
@@ -137,8 +139,8 @@ anchor_bottom = 1.455
 offset_bottom = -0.015003204
 grow_horizontal = 2
 grow_vertical = 0
-value = 50.0
-rounded = true
+max_value = 4.0
+value = 3.2800000000000002
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
