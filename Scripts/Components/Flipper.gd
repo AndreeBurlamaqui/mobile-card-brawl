@@ -1,5 +1,5 @@
 ## Script that will tween the object to flip like a card
-extends Node
+class_name Flipper extends Node
 
 @export_category("Groups")
 @export var front_group: Control
@@ -11,40 +11,43 @@ extends Node
 
 @export var target_root: Control
 
-var is_face_up: bool = false
-var is_flipping: bool = false
+enum FlipState {FACE_UP, FLIPPING, FACE_DOWN}
+var _current_flip_state: FlipState
 
 signal card_flipped(is_up: bool)
 
 func _ready() -> void:
 	# Initialize state
-	is_face_up = start_face_up
-	_update_texture()
+	_current_flip_state = FlipState.FACE_UP if start_face_up else FlipState.FACE_DOWN
+	_update_texture(_current_flip_state == FlipState.FACE_UP)
 
-func flip() -> void:
-	# Prevent spamming the flip while it's already animating
-	if is_flipping: return
+func flip_to(face: FlipState) -> void:
+	if _current_flip_state == face:
+		return # Same face
 	
-	is_flipping = true
+	if _current_flip_state == FlipState.FLIPPING:
+		return # Animation in progress
+	
+	_current_flip_state = FlipState.FLIPPING
 	
 	var tween = create_tween()
-	tween.set_trans(Tween.TRANS_SINE) 
+	tween.set_trans(Tween.TRANS_BACK) 
 	tween.set_ease(Tween.EASE_IN_OUT)
 	
-	tween.tween_property(target_root, "scale:x", 0.0, animation_duration / 2)
-	tween.tween_callback(_toggle_face_state)
-	tween.tween_property(target_root, "scale:x", 1.0, animation_duration / 2)
+	tween.tween_property(target_root, "scale:x", 0.0, animation_duration * 0.5)
+	tween.tween_callback(_update_texture.bind(face == FlipState.FACE_UP))
+	tween.tween_property(target_root, "scale:x", 1.0, animation_duration * 0.5)
 	
 	await tween.finished
 	
-	is_flipping = false
-	card_flipped.emit(is_face_up)
+	_current_flip_state = face
+	card_flipped.emit(_current_flip_state)
 
-func _toggle_face_state() -> void:
-	is_face_up = !is_face_up
-	_update_texture()
+func toggle_flip() -> void:
+	var toggled_face = FlipState.FACE_DOWN if _current_flip_state == FlipState.FACE_UP else FlipState.FACE_UP
+	flip_to(toggled_face)
 
-func _update_texture() -> void:
+func _update_texture(is_face_up: bool) -> void:
 	front_group.visible = is_face_up
 	front_group.set_process(is_face_up)
 	
@@ -54,4 +57,4 @@ func _update_texture() -> void:
 # -- INPUT TESTING (Remove later) --
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		flip()
+		toggle_flip()

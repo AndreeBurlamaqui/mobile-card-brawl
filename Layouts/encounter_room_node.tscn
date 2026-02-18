@@ -11,7 +11,7 @@
 font_size = 10
 font_color = Color(0, 0, 0, 1)
 
-[node name="Encounter Room" type="Control" unique_id=1340816512 node_paths=PackedStringArray("type_label")]
+[node name="Encounter Room" type="Control" unique_id=1340816512 node_paths=PackedStringArray("type_label", "flip_controller")]
 custom_minimum_size = Vector2(50, 75)
 layout_mode = 3
 anchors_preset = 8
@@ -29,6 +29,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_bckri")
 type_label = NodePath("Root/Front Face/Label")
+flip_controller = NodePath("Root")
 
 [node name="Root" type="Control" parent="." unique_id=1263092363 node_paths=PackedStringArray("front_group", "back_group", "target_root")]
 self_modulate = Color(0.18717614, 0.18717614, 0.18717614, 1)
@@ -44,6 +45,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("2_32ujw")
 front_group = NodePath("Front Face")
 back_group = NodePath("Back Face")
+animation_duration = 0.2
 target_root = NodePath(".")
 
 [node name="HoldButton" type="TextureButton" parent="Root" unique_id=800267456 node_paths=PackedStringArray("progress_bar")]
