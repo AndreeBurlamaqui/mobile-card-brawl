@@ -1,14 +1,18 @@
 [gd_scene format=3 uid="uid://7uqhgxefpkta"]
 
-[ext_resource type="Texture2D" uid="uid://butg2eb1xhhvf" path="res://Assets/UI/Transparent border/panel-transparent-border-013.png" id="1_pe43e"]
+[ext_resource type="Script" uid="uid://en6rbmqxmdxq" path="res://Scripts/Map/MapNodeVisual.gd" id="1_bckri"]
+[ext_resource type="Texture2D" uid="uid://doxi8aver4hml" path="res://Assets/Sprites/card_back.png" id="1_fnqai"]
 [ext_resource type="Script" uid="uid://bfg1kqknaau7j" path="res://Scripts/Components/HoldButton.gd" id="2_01hcw"]
+[ext_resource type="Script" uid="uid://dlu44qjag5bro" path="res://Scripts/Components/Flipper.gd" id="2_32ujw"]
 [ext_resource type="Texture2D" uid="uid://ramus6c5pvc8" path="res://Assets/UI/Border/panel-border-010.png" id="2_fnqai"]
+[ext_resource type="Texture2D" uid="uid://08vib7eux3fd" path="res://Assets/Sprites/card_empty.png" id="3_bckri"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mtpr8"]
 font_size = 10
+font_color = Color(0, 0, 0, 1)
 
-[node name="Control" type="Control" unique_id=1340816512]
-custom_minimum_size = Vector2(50, 50)
+[node name="Encounter Room" type="Control" unique_id=1340816512 node_paths=PackedStringArray("type_label")]
+custom_minimum_size = Vector2(50, 75)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -23,8 +27,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_bckri")
+type_label = NodePath("Root/Front Face/Label")
 
-[node name="Panel" type="TextureRect" parent="." unique_id=20045216]
+[node name="Root" type="Control" parent="." unique_id=1263092363 node_paths=PackedStringArray("front_group", "back_group", "target_root")]
 self_modulate = Color(0.18717614, 0.18717614, 0.18717614, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(64, 64)
@@ -34,28 +40,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_pe43e")
-stretch_mode = 5
+pivot_offset_ratio = Vector2(0.5, 0.5)
+script = ExtResource("2_32ujw")
+front_group = NodePath("Front Face")
+back_group = NodePath("Back Face")
+target_root = NodePath(".")
 
-[node name="Label" type="Label" parent="Panel" unique_id=1368932854]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.125
-anchor_top = 0.125
-anchor_right = 0.875
-anchor_bottom = 0.875
-grow_horizontal = 2
-grow_vertical = 2
-text = "ENCOUNTER"
-label_settings = SubResource("LabelSettings_mtpr8")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
-uppercase = true
-metadata/_edit_use_anchors_ = true
-
-[node name="HoldButton" type="TextureButton" parent="Panel" unique_id=800267456 node_paths=PackedStringArray("progress_bar")]
+[node name="HoldButton" type="TextureButton" parent="Root" unique_id=800267456 node_paths=PackedStringArray("progress_bar")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,7 +60,7 @@ instant_reset = false
 progress_bar = NodePath("TextureProgressBar")
 metadata/_custom_type_script = "uid://bfg1kqknaau7j"
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Panel/HoldButton" unique_id=2113290305]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Root/HoldButton" unique_id=2113290305]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -83,3 +75,62 @@ stretch_margin_top = 20
 stretch_margin_right = 20
 stretch_margin_bottom = 20
 texture_progress = ExtResource("2_fnqai")
+
+[node name="Back Face" type="Control" parent="Root" unique_id=1713558717]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Root/Back Face" unique_id=1074199723]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_fnqai")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Front Face" type="Control" parent="Root" unique_id=187534069]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Root/Front Face" unique_id=269941875]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_bckri")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Root/Front Face" unique_id=1368932854]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1875
+anchor_top = 0.1
+anchor_right = 0.8125
+anchor_bottom = 0.91333336
+grow_horizontal = 2
+grow_vertical = 2
+text = "ENCOUNTER"
+label_settings = SubResource("LabelSettings_mtpr8")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+uppercase = true
+metadata/_edit_use_anchors_ = true

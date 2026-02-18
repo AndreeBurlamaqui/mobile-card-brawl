@@ -17,16 +17,22 @@ class MapNodeData:
 	var grid_pos: Vector2i
 	var type: String = "ROOM" # TEMP
 	var outgoing: Array[Vector2i] = []
-	var visual_instance: Control = null
+	var _visual_instance: MapNodeVisual = null
 	var controller: MapGenerator
 	
 	enum ProgressState { BLOCKED, REACHED, COMPLETED}
 	var state: ProgressState = ProgressState.BLOCKED
 	var unlocked_by := Vector2i.MIN
 	
+	signal encounter_updated
+	
 	func _init(_map_generator: MapGenerator, _position: Vector2i):
 		controller = _map_generator
 		grid_pos = _position
+	
+	func assign_visual(new_visual: MapNodeVisual) -> void:
+		_visual_instance = new_visual
+		_visual_instance.setup(self)
 	
 	func set_room_progress(new_state: MapNodeData.ProgressState) -> void:
 		state = new_state
@@ -37,6 +43,14 @@ class MapNodeData:
 		#  Update visuals
 		controller._setup_visual_appearance(self)
 		controller._line_layer.queue_redraw()
+		
+		encounter_updated.emit()
+	
+	func get_center_position() -> Vector2:
+		if not _visual_instance:
+			return Vector2.ZERO
+		
+		return _visual_instance.position + (_visual_instance.size / 2.0)
 
 var _grid_data: Array = [] # 2D array [row][col]
 
@@ -262,8 +276,7 @@ func _spawn_visuals() -> void:
 			
 			vis.position = center_pos + offset - (vis.size / 2.0)
 			
-			data.visual_instance = vis
-			_setup_visual_appearance(data)
+			data.assign_visual(vis)
 
 func _get_position_jitter(row: int, column: int, width: int) -> Vector2:
 	# Don't jitter special nodes
@@ -289,40 +302,21 @@ func _get_position_jitter(row: int, column: int, width: int) -> Vector2:
 	
 	return Vector2(j_x, randf_range(_position_jitter * -1, _position_jitter))
 
-func _setup_visual_appearance(data: MapNodeData):
-	# TEMP: We'll move it to the encounter visual later
-	var vis = data.visual_instance
-	var lbl = vis.get_node("Panel/Label")
-	lbl.text = data.type
-	match data.type:
-		"START": vis.modulate = Color.GREEN
-		"BOSS": vis.modulate = Color.DARK_RED
-		"ELITE": vis.modulate = Color.CRIMSON
-		"CAMP": vis.modulate = Color.FOREST_GREEN
-		"CHEST": vis.modulate = Color.GOLD
-		"EVENT": vis.modulate = Color.SKY_BLUE
-		"MOB": vis.modulate = Color.LIGHT_CORAL
-	
-	var hold_button = vis.get_node("Panel/HoldButton") as HoldButton
-	#hold_button.long_pressed.connect(set_room_progress.bind(data, MapNodeData.ProgressState.COMPLETED))
-	hold_button.long_pressed.connect(GameManager.instance.start_battle.bind(data))
-	hold_button.set_interactable(data.state == MapNodeData.ProgressState.REACHED)
-
 func _on_line_layer_draw() -> void:
 	var height = data.grid_height
 	var width = data.grid_width
 	
 	for row in range(height):
 		for column in range(width):
-			var start_node = _grid_data[row][column]
-			if not start_node or not start_node.visual_instance: continue
+			var start_node = _grid_data[row][column] as MapNodeData
+			if not start_node: continue
 			
-			var start_pos = start_node.visual_instance.position + (start_node.visual_instance.size / 2.0)
+			var start_pos = start_node.get_center_position()
 			
 			for target_grid in start_node.outgoing:
-				var end_node = _grid_data[target_grid.x][target_grid.y]
-				if end_node and end_node.visual_instance:
-					var end_pos = end_node.visual_instance.position + (end_node.visual_instance.size / 2.0)
+				var end_node = _grid_data[target_grid.x][target_grid.y] as MapNodeData
+				if end_node:
+					var end_pos = end_node.get_center_position()
 					
 					# Default BLOCKED
 					var line_color = Color.DIM_GRAY
@@ -360,7 +354,7 @@ func _on_room_completed(room: MapNodeData) -> void:
 		
 		sibling_node.state = MapNodeData.ProgressState.BLOCKED
 		sibling_node.unlocked_by = Vector2i.MIN # Clear to ensure
-		_setup_visual_appearance(sibling_node)
+		sibling_node.node_updated.emit()
 	
 	# Update connection states
 	for target_pos in room.outgoing:
@@ -370,4 +364,4 @@ func _on_room_completed(room: MapNodeData) -> void:
 		
 		next_node.state = MapNodeData.ProgressState.REACHED
 		next_node.unlocked_by = room.grid_pos
-		_setup_visual_appearance(next_node)
+		next_node.encounter_updated.emit()
