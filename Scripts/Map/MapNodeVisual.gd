@@ -11,5 +11,5 @@ func setup(data: MapGenerator.MapNodeData) -> void:
 	data.encounter_updated.connect(_on_encounter_update.bind(data))
 
 func _on_encounter_update(data: MapGenerator.MapNodeData) -> void:
-	type_label.text = data.type
-	print("Updating encounter ", data.type)
+	type_label.text = data.type.id
+	print("Updating encounter: [%.v] {%s}" %[data.grid_pos, data.type])

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyEncounterData" format=3 uid="uid://dnu22hundbykk"]
+
+[ext_resource type="Resource" uid="uid://doq168jlgr2m3" path="res://Scripts/Enemy/Resources/rat.tres" id="1_68675"]
+[ext_resource type="Script" uid="uid://reb74y0d3nop" path="res://Scripts/Map/Resources/Encounters/EnemyEncounterData.gd" id="1_xql2j"]
+
+[resource]
+script = ExtResource("1_xql2j")
+enemy = ExtResource("1_68675")
+id = "MOB"
+weight = 50.0
+metadata/_custom_type_script = "uid://reb74y0d3nop"

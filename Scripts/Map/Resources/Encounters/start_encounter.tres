@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BaseEncounterTypeData" format=3 uid="uid://cya78bb0rfnqc"]
+
+[ext_resource type="Script" uid="uid://bj3j5ffwgrirp" path="res://Scripts/Map/BaseEncounterTypeData.gd" id="1_0ve5e"]
+
+[resource]
+script = ExtResource("1_0ve5e")
+id = "START"
+start_showing = true
+weight = 100.0
+metadata/_custom_type_script = "uid://bj3j5ffwgrirp"

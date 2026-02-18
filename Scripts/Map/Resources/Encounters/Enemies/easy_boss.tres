@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyEncounterData" format=3 uid="uid://dlvmg1ndisol4"]
+
+[ext_resource type="Script" uid="uid://reb74y0d3nop" path="res://Scripts/Map/Resources/Encounters/EnemyEncounterData.gd" id="1_1vl71"]
+[ext_resource type="Resource" uid="uid://b67vcb5gwep5t" path="res://Scripts/Enemy/Resources/mimic.tres" id="1_2cgsg"]
+
+[resource]
+script = ExtResource("1_1vl71")
+enemy = ExtResource("1_2cgsg")
+id = "BOSS"
+start_showing = true
+metadata/_custom_type_script = "uid://reb74y0d3nop"

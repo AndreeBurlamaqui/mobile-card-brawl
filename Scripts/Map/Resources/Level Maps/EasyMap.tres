@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="LevelMapData" format=3 uid="uid://bm3tmek2jik83"]
+
+[ext_resource type="Script" uid="uid://bj3j5ffwgrirp" path="res://Scripts/Map/BaseEncounterTypeData.gd" id="1_cvlfr"]
+[ext_resource type="Resource" uid="uid://dlvmg1ndisol4" path="res://Scripts/Map/Resources/Encounters/Enemies/easy_boss.tres" id="2_gtgbg"]
+[ext_resource type="Resource" uid="uid://dnu22hundbykk" path="res://Scripts/Map/Resources/Encounters/Enemies/quick_rat_encounter.tres" id="2_lc6o3"]
+[ext_resource type="Script" uid="uid://bm6gm25oqoo3r" path="res://Scripts/Map/LevelMapData.gd" id="2_smvbq"]
+[ext_resource type="Resource" uid="uid://euovrum14t2i" path="res://Scripts/Map/Resources/Encounters/Events/simple_loot_encounter.tres" id="3_j702c"]
+[ext_resource type="Resource" uid="uid://cya78bb0rfnqc" path="res://Scripts/Map/Resources/Encounters/start_encounter.tres" id="4_lc6o3"]
+[ext_resource type="Resource" uid="uid://pwo5j7apvaf7" path="res://Scripts/Map/Resources/Encounters/Events/simple_trap_encounter.tres" id="4_wn1j2"]
+[ext_resource type="Resource" uid="uid://wg70msslu6xj" path="res://Scripts/Map/Resources/Encounters/Events/campfire_encounter.tres" id="5_42ip5"]
+
+[resource]
+script = ExtResource("2_smvbq")
+grid_height = 5
+_possible_encounters = Array[ExtResource("1_cvlfr")]([ExtResource("2_lc6o3"), ExtResource("3_j702c"), ExtResource("4_wn1j2"), ExtResource("5_42ip5")])
+start_encounter = ExtResource("4_lc6o3")
+boss_encounter = ExtResource("2_gtgbg")
+metadata/_custom_type_script = "uid://bm6gm25oqoo3r"

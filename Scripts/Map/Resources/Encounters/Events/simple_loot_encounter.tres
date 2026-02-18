@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EventEncounterData" format=3 uid="uid://euovrum14t2i"]
+
+[ext_resource type="Script" uid="uid://31akguqumi5q" path="res://Scripts/Map/Resources/Encounters/EventEncounterData.gd" id="1_i5tcp"]
+
+[resource]
+script = ExtResource("1_i5tcp")
+id = "LOOT"
+metadata/_custom_type_script = "uid://31akguqumi5q"

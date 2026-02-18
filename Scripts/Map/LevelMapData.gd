@@ -8,38 +8,34 @@ class_name LevelMapData extends Resource
 ## Chance that a path simply merges into a neighbor lane instead of moving up
 @export_range(0.0, 100.0) var _deadend_merge_chance: float = 1
 
-# TEMP: Later this will be modular for each data
-@export_group("Room Weights")
-@export var weight_mob: int = 50
-@export var weight_camp: int = 15
-@export var weight_chest: int = 10
-@export var weight_event: int = 25
-
-@export_group("Enemy Specifics")
-## If a room is a MOB, chance it becomes an ELITE
-@export_range(0.0, 100.0) var _elite_chance: float = 15
-@export var _possible_enemies : Array[EnemyData] = []
+@export_group("Encounters")
+@export var _possible_encounters : Array[BaseEncounterTypeData] = []
+@export var start_encounter: BaseEncounterTypeData
+@export var boss_encounter: EnemyEncounterData
 
 # Helper to get a random room type based on weights
-func pick_weighted_room_type() -> String:
-	var total_weight = weight_mob + weight_camp + weight_chest + weight_event
-	var roll = randi() % total_weight
+func get_random_encounter() -> BaseEncounterTypeData:
+	if _possible_encounters.is_empty():
+		push_warning("LevelMapData: No encounters defined!")
+		return null
+
+	# 1. Calculate total weight
+	var total_weight: float = 0.0
+	for encounter in _possible_encounters:
+		total_weight += encounter.weight
+
+	# 2. Pick a random number within that range
+	var roll: float = randf_range(0.0, total_weight)
+
+	# 3. Find which encounter corresponds to that roll
+	var current_weight: float = 0.0
+	for encounter in _possible_encounters:
+		current_weight += encounter.weight
+		if roll <= current_weight:
+			return encounter
 	
-	if roll < weight_mob: return "MOB"
-	roll -= weight_mob
-	
-	if roll < weight_camp: return "CAMP"
-	roll -= weight_camp
-	
-	if roll < weight_chest: return "CHEST"
-	
-	return "EVENT"
+	# Fallback (should theoretically not happen due to math, but safe to have)
+	return _possible_encounters.front()
 
 func is_deadend() -> bool:
 	return randf() < (_deadend_merge_chance / 100.0)
-
-func is_elite() -> bool:
-	return randf() < (_elite_chance / 100.0)
-
-func get_random_enemy() -> EnemyData:
-	return _possible_enemies.pick_random()

@@ -15,7 +15,7 @@ class_name MapGenerator extends Control
 # Data Class
 class MapNodeData:
 	var grid_pos: Vector2i
-	var type: String = "ROOM" # TEMP
+	var type: BaseEncounterTypeData
 	var outgoing: Array[Vector2i] = []
 	var _visual_instance: MapNodeVisual = null
 	var controller: MapGenerator
@@ -100,7 +100,7 @@ func _generate_grid_data() -> void:
 	# Pick a random column for the single start node
 	var start_col = randi() % width
 	var start_node = MapNodeData.new(self, Vector2i(0, start_col))
-	start_node.type = "START"
+	start_node.type = data.start_encounter
 	start_node.state = MapNodeData.ProgressState.COMPLETED
 	_grid_data[0][start_col] = start_node
 
@@ -118,7 +118,7 @@ func _generate_grid_data() -> void:
 	var boss_row = height - 1
 	var boss_col = floor(width / 2.0)
 	var boss = MapNodeData.new(self, Vector2i(boss_row, boss_col))
-	boss.type = "BOSS"
+	boss.type = data.boss_encounter
 	_grid_data[boss_row][boss_col] = boss
 	
 	# Connect Pre-Boss row to Boss
@@ -208,20 +208,11 @@ func _assign_room_types() -> void:
 	# Skip Start (Row 0) and Boss (Row height-1)
 	for row in range(1, height - 1):
 		for column in range(width):
-			var node = _grid_data[row][column]
+			var node = _grid_data[row][column] as MapNodeData
 			if not node: continue
 			
 			# Set room type
-			var base_type = data.pick_weighted_room_type()
-			
-			# In case it's an enemy, check tier
-			if base_type == "MOB":
-				if data.is_elite():
-					node.type = "ELITE"
-				else:
-					node.type = "MOB"
-			else:
-				node.type = base_type
+			node.type = data.get_random_encounter()
 
 func _create_slots() -> void:
 	# Fill GridContainer with spacers to define the "perfect grid" positions
@@ -281,7 +272,8 @@ func _spawn_visuals() -> void:
 func _get_position_jitter(row: int, column: int, width: int) -> Vector2:
 	# Don't jitter special nodes
 	var type = _grid_data[row][column].type
-	if type == "START" or type == "BOSS": return Vector2.ZERO
+	if column == 0 or column == data.grid_height - 1:
+		return Vector2.ZERO # Start or boss
 	
 	var max_x = _position_jitter
 	var min_x = _position_jitter * -1
