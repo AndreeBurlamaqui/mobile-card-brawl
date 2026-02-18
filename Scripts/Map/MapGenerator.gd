@@ -69,10 +69,7 @@ func _generate_grid_data() -> void:
 		_connect_rooms(r)
 	
 	# After branches are created. Set those connected to Start as reached
-	for reached_position in start_node.outgoing:
-		var reached_node = _grid_data[reached_position.x][reached_position.y]
-		reached_node.state = MapNodeData.ProgressState.BLOCKED
-		reached_node.unlocked_by = start_node.grid_pos
+	_on_room_completed(start_node)
 	
 	# Final Boss
 	var boss_row = height - 1

@@ -17,11 +17,11 @@ func _on_encounter_update(data: MapNodeData) -> void:
 	
 	type_label.text = data.encounter_type.id
 	
-	var is_showing = data.state != MapNodeData.ProgressState.BLOCKED  or data.encounter_type.start_showing
+	var is_showing = data.state == MapNodeData.ProgressState.READY  or data.encounter_type.start_showing
 	var starting_face = Flipper.FlipState.FACE_UP if is_showing else Flipper.FlipState.FACE_DOWN
 	flip_controller.flip_to(starting_face)
 	
-	button.set_interactable(data.state == MapNodeData.ProgressState.REACHED)
+	button.set_interactable(data.state == MapNodeData.ProgressState.READY)
 
 func _on_droppable_hover_enter(draggable: DraggableComponent) -> void:
 	modulate.a = 0.5

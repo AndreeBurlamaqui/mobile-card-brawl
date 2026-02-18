@@ -6,7 +6,7 @@ var outgoing: Array[Vector2i] = []
 var _visual_instance: MapNodeVisual = null
 var controller: MapGenerator
 
-enum ProgressState { BLOCKED, REACHED, COMPLETED}
+enum ProgressState { BLOCKED, REACHED, READY, COMPLETED}
 var state: ProgressState = ProgressState.BLOCKED
 var unlocked_by := Vector2i.MIN
 
@@ -43,8 +43,8 @@ func get_center_position() -> Vector2:
 	return _visual_instance.position + (_visual_instance.size / 2.0)
 
 func _can_drop_torch(_draggable: DraggableComponent) -> bool:
-	return state == ProgressState.BLOCKED
+	return state == ProgressState.REACHED
 	
 func _on_torch_drop_received(draggable: DraggableComponent) -> void:
 	if _can_drop_torch(draggable): # Safe check
-		set_room_progress(ProgressState.REACHED)
+		set_room_progress(ProgressState.READY)

@@ -30,7 +30,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8udh6")
 data = ExtResource("2_4ooxk")
-_position_jitter = null
 _scroller = NodePath("ScrollContainer")
 _line_layer = NodePath("ScrollContainer/Content Container/Line")
 _rooms_layer = NodePath("ScrollContainer/Content Container/Encounter Rooms")
