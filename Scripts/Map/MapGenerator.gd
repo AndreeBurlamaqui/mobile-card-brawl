@@ -302,7 +302,7 @@ func _on_room_completed(room: MapNodeData) -> void:
 		
 		sibling_node.state = MapNodeData.ProgressState.BLOCKED
 		sibling_node.unlocked_by = Vector2i.MIN # Clear to ensure
-		sibling_node.node_updated.emit()
+		sibling_node.encounter_updated.emit()
 	
 	# Update connection states
 	for target_pos in room.outgoing:
