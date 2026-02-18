@@ -57,7 +57,7 @@ func _process(delta: float) -> void:
 			if is_instance_valid(_last_hovered_droppable):
 				_last_hovered_droppable.on_hover_exit.emit()
 			
-			if is_instance_valid(found):
+			if is_instance_valid(found) and found.can_accept(current_drag):
 				found.on_hover_enter.emit(current_drag)
 			
 			print("Focus Drop Change: %s -> %s" % [str(_last_hovered_droppable), str(found)])
