@@ -10,5 +10,5 @@ class_name BaseEncounterTypeData extends Resource
 ## e.g., Common = 10.0, Rare = 1.0.
 @export var weight: float = 10.0
 
-func start_encounter(controller: Node) -> void:
+func start() -> void:
 	print("Base encounter started. Please override this method.")

@@ -6,12 +6,13 @@
 [ext_resource type="Script" uid="uid://dlu44qjag5bro" path="res://Scripts/Components/Flipper.gd" id="2_32ujw"]
 [ext_resource type="Texture2D" uid="uid://ramus6c5pvc8" path="res://Assets/UI/Border/panel-border-010.png" id="2_fnqai"]
 [ext_resource type="Texture2D" uid="uid://08vib7eux3fd" path="res://Assets/Sprites/card_empty.png" id="3_bckri"]
+[ext_resource type="Script" uid="uid://cirdbbgmkqwlm" path="res://Scripts/Components/Drag and Drop/droppable_component.gd" id="7_0gx6b"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mtpr8"]
 font_size = 10
 font_color = Color(0, 0, 0, 1)
 
-[node name="Encounter Room" type="Control" unique_id=1340816512 node_paths=PackedStringArray("type_label", "flip_controller")]
+[node name="Encounter Room" type="Control" unique_id=1340816512 node_paths=PackedStringArray("type_label", "flip_controller", "droppable_area", "button")]
 custom_minimum_size = Vector2(50, 75)
 layout_mode = 3
 anchors_preset = 8
@@ -30,6 +31,8 @@ size_flags_vertical = 4
 script = ExtResource("1_bckri")
 type_label = NodePath("Root/Front Face/Label")
 flip_controller = NodePath("Root")
+droppable_area = NodePath("DroppableComponent")
+button = NodePath("HoldButton")
 
 [node name="Root" type="Control" parent="." unique_id=1263092363 node_paths=PackedStringArray("front_group", "back_group", "target_root")]
 self_modulate = Color(0.18717614, 0.18717614, 0.18717614, 1)
@@ -47,36 +50,6 @@ front_group = NodePath("Front Face")
 back_group = NodePath("Back Face")
 animation_duration = 0.2
 target_root = NodePath(".")
-
-[node name="HoldButton" type="TextureButton" parent="Root" unique_id=800267456 node_paths=PackedStringArray("progress_bar")]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("2_01hcw")
-hold_time = 0.75
-instant_reset = false
-progress_bar = NodePath("TextureProgressBar")
-metadata/_custom_type_script = "uid://bfg1kqknaau7j"
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Root/HoldButton" unique_id=2113290305]
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-fill_mode = 7
-nine_patch_stretch = true
-stretch_margin_left = 20
-stretch_margin_top = 20
-stretch_margin_right = 20
-stretch_margin_bottom = 20
-texture_progress = ExtResource("2_fnqai")
 
 [node name="Back Face" type="Control" parent="Root" unique_id=1713558717]
 visible = false
@@ -136,3 +109,45 @@ autowrap_mode = 3
 clip_text = true
 uppercase = true
 metadata/_edit_use_anchors_ = true
+
+[node name="DroppableComponent" type="Control" parent="." unique_id=588808717]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_0gx6b")
+metadata/_custom_type_script = "uid://cirdbbgmkqwlm"
+
+[node name="HoldButton" type="TextureButton" parent="." unique_id=800267456 node_paths=PackedStringArray("progress_bar")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_01hcw")
+hold_time = 0.75
+instant_reset = false
+progress_bar = NodePath("TextureProgressBar")
+metadata/_custom_type_script = "uid://bfg1kqknaau7j"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HoldButton" unique_id=2113290305]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+fill_mode = 7
+nine_patch_stretch = true
+stretch_margin_left = 20
+stretch_margin_top = 20
+stretch_margin_right = 20
+stretch_margin_bottom = 20
+texture_progress = ExtResource("2_fnqai")
+
+[connection signal="on_hover_enter" from="DroppableComponent" to="." method="_on_droppable_hover_enter"]
+[connection signal="on_hover_exit" from="DroppableComponent" to="." method="_on_droppable_hover_exit"]

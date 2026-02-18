@@ -56,7 +56,7 @@ func add_next_deck_card() -> void:
 	deck_change.emit(_deck)
 
 func add_card(data: CardData) -> void:
-	var new_card = card_visual.instantiate()
+	var new_card = card_visual.instantiate() as CardVisual
 	new_card.setup(data, self)
 	_cards.append(new_card)
 	add_child(new_card)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://4mvtnmqrhhy7"]
 
-[ext_resource type="Script" uid="uid://di7g556g50go0" path="res://Scripts/dev_debug.gd" id="1_8amj3"]
+[ext_resource type="Script" uid="uid://di7g556g50go0" path="res://Scripts/dev_debug_battle.gd" id="1_8amj3"]
 [ext_resource type="Script" uid="uid://derujt32ntfy0" path="res://Scripts/Components/UIParallax.gd" id="1_j40gt"]
 [ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/Player/hand.gd" id="1_wn8ut"]
 [ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="2_wn8ut"]

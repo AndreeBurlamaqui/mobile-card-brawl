@@ -53,8 +53,3 @@ func _update_texture(is_face_up: bool) -> void:
 	
 	back_group.visible = not is_face_up
 	back_group.set_process(not is_face_up)
-
-# -- INPUT TESTING (Remove later) --
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		toggle_flip()

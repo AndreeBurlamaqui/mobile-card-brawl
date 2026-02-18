@@ -12,46 +12,6 @@ class_name MapGenerator extends Control
 @export var _grid_slots: GridContainer
 @export var _encounter_node: PackedScene
 
-# Data Class
-class MapNodeData:
-	var grid_pos: Vector2i
-	var type: BaseEncounterTypeData
-	var outgoing: Array[Vector2i] = []
-	var _visual_instance: MapNodeVisual = null
-	var controller: MapGenerator
-	
-	enum ProgressState { BLOCKED, REACHED, COMPLETED}
-	var state: ProgressState = ProgressState.BLOCKED
-	var unlocked_by := Vector2i.MIN
-	
-	signal encounter_updated
-	
-	func _init(_map_generator: MapGenerator, _position: Vector2i):
-		controller = _map_generator
-		grid_pos = _position
-	
-	func assign_visual(new_visual: MapNodeVisual) -> void:
-		_visual_instance = new_visual
-		_visual_instance.setup(self)
-	
-	func set_room_progress(new_state: MapNodeData.ProgressState) -> void:
-		state = new_state
-		
-		if state == MapNodeData.ProgressState.COMPLETED:
-			controller._on_room_completed(self)
-		
-		#  Update visuals
-		controller._setup_visual_appearance(self)
-		controller._line_layer.queue_redraw()
-		
-		encounter_updated.emit()
-	
-	func get_center_position() -> Vector2:
-		if not _visual_instance:
-			return Vector2.ZERO
-		
-		return _visual_instance.position + (_visual_instance.size / 2.0)
-
 var _grid_data: Array = [] # 2D array [row][col]
 
 func _ready() -> void:
@@ -100,7 +60,7 @@ func _generate_grid_data() -> void:
 	# Pick a random column for the single start node
 	var start_col = randi() % width
 	var start_node = MapNodeData.new(self, Vector2i(0, start_col))
-	start_node.type = data.start_encounter
+	start_node.encounter_type = data.start_encounter
 	start_node.state = MapNodeData.ProgressState.COMPLETED
 	_grid_data[0][start_col] = start_node
 
@@ -111,14 +71,14 @@ func _generate_grid_data() -> void:
 	# After branches are created. Set those connected to Start as reached
 	for reached_position in start_node.outgoing:
 		var reached_node = _grid_data[reached_position.x][reached_position.y]
-		reached_node.state = MapNodeData.ProgressState.REACHED
+		reached_node.state = MapNodeData.ProgressState.BLOCKED
 		reached_node.unlocked_by = start_node.grid_pos
 	
 	# Final Boss
 	var boss_row = height - 1
 	var boss_col = floor(width / 2.0)
 	var boss = MapNodeData.new(self, Vector2i(boss_row, boss_col))
-	boss.type = data.boss_encounter
+	boss.encounter_type = data.boss_encounter
 	_grid_data[boss_row][boss_col] = boss
 	
 	# Connect Pre-Boss row to Boss
@@ -212,7 +172,7 @@ func _assign_room_types() -> void:
 			if not node: continue
 			
 			# Set room type
-			node.type = data.get_random_encounter()
+			node.encounter_type = data.get_random_encounter()
 
 func _create_slots() -> void:
 	# Fill GridContainer with spacers to define the "perfect grid" positions
@@ -271,7 +231,6 @@ func _spawn_visuals() -> void:
 
 func _get_position_jitter(row: int, column: int, width: int) -> Vector2:
 	# Don't jitter special nodes
-	var type = _grid_data[row][column].type
 	if column == 0 or column == data.grid_height - 1:
 		return Vector2.ZERO # Start or boss
 	

@@ -1,4 +1,4 @@
 class_name EventEncounterData extends BaseEncounterTypeData
 
-func start_encounter(controller: Node) -> void:
+func start() -> void:
 	print("Event encounter")

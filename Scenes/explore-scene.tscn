@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://ciqwks4fjsdxq"]
 
 [ext_resource type="Script" uid="uid://c2umtrtfxvmq5" path="res://Scripts/Map/MapGenerator.gd" id="1_8udh6"]
+[ext_resource type="Script" uid="uid://wiw4mekkqpwc" path="res://Scripts/exploration_controller.gd" id="1_k23y4"]
 [ext_resource type="Resource" uid="uid://bm3tmek2jik83" path="res://Scripts/Map/Resources/Level Maps/EasyMap.tres" id="2_4ooxk"]
+[ext_resource type="Resource" uid="uid://cej81r2bumagb" path="res://Scripts/Symbols/symbol_diamond.tres" id="2_mfrf2"]
 [ext_resource type="PackedScene" uid="uid://7uqhgxefpkta" path="res://Layouts/encounter_room_node.tscn" id="2_rnxxt"]
+[ext_resource type="Script" uid="uid://c5dwvu67qqx13" path="res://Scripts/Player/hand.gd" id="4_7ccnx"]
+[ext_resource type="PackedScene" uid="uid://cxjqc1spmocv5" path="res://Layouts/card_base.tscn" id="5_k23y4"]
 
-[node name="Map Scene" type="CanvasLayer" unique_id=1859201820]
+[node name="Map Scene" type="CanvasLayer" unique_id=1859201820 node_paths=PackedStringArray("player_hand")]
+script = ExtResource("1_k23y4")
+torch_symbol = ExtResource("2_mfrf2")
+player_hand = NodePath("Safe zone/Hand")
 
 [node name="Safe zone" type="Control" parent="." unique_id=1333655279]
 layout_mode = 3
@@ -17,21 +24,21 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Map" type="Control" parent="Safe zone" unique_id=1528006353 node_paths=PackedStringArray("_scroller", "_line_layer", "_rooms_layer", "_grid_slots")]
 layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.81707317
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8udh6")
 data = ExtResource("2_4ooxk")
+_position_jitter = null
 _scroller = NodePath("ScrollContainer")
 _line_layer = NodePath("ScrollContainer/Content Container/Line")
 _rooms_layer = NodePath("ScrollContainer/Content Container/Encounter Rooms")
 _grid_slots = NodePath("ScrollContainer/Content Container/Placement Slots")
 _encounter_node = ExtResource("2_rnxxt")
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="Safe zone/Map" unique_id=911298174]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,3 +104,43 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Hand" type="Control" parent="Safe zone" unique_id=369386131 node_paths=PackedStringArray("card_placement")]
+process_mode = 3
+layout_mode = 1
+anchor_top = 0.8582317
+anchor_right = 1.0
+anchor_bottom = 0.9390244
+offset_top = -27.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 1)
+script = ExtResource("4_7ccnx")
+card_placement = NodePath("Card Placement")
+card_visual = ExtResource("5_k23y4")
+arch_height = 30.0
+rotation_curve = 25.0
+
+[node name="Card Placement" type="HBoxContainer" parent="Safe zone/Hand" unique_id=994522825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 1)
+alignment = 1
+
+[node name="Panel Base" type="Panel" parent="Safe zone/Hand/Card Placement" unique_id=148423648]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardBase" parent="Safe zone/Hand" unique_id=829716194 instance=ExtResource("5_k23y4")]
+layout_mode = 1
+offset_left = -27.0
+offset_top = -50.0
+offset_right = 23.0
+offset_bottom = 25.0

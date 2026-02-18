@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cpo2dlsicijm5"]
+
+[ext_resource type="Script" uid="uid://d13qrhp7qj5is" path="res://Scripts/Player/card_data.gd" id="1_vvnvu"]
+[ext_resource type="Resource" uid="uid://cej81r2bumagb" path="res://Scripts/Symbols/symbol_diamond.tres" id="2_frnxh"]
+
+[resource]
+script = ExtResource("1_vvnvu")
+type = ExtResource("2_frnxh")
+value = 2
+metadata/_custom_type_script = "uid://d13qrhp7qj5is"

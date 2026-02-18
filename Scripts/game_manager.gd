@@ -6,7 +6,7 @@ enum Scene { MAP, BATTLE}
 @export var battle_scene : BattleController
 var current_scene : Scene
 
-var cur_map_node: MapGenerator.MapNodeData
+var cur_map_node: MapNodeData
 
 func _ready() -> void:
 	instance = self
@@ -23,25 +23,25 @@ func _change_scene(new_scene: Scene) -> void:
 	battle_scene.visible = is_on_battle
 	battle_scene.set_process(is_on_battle)
 
-func start_battle(data: MapGenerator.MapNodeData) -> void:
-	_change_scene(Scene.BATTLE)
-	cur_map_node = data
-	battle_scene.start_battle(data.controller.data.get_random_enemy()) # TEMP
-	# TODO: Add what event each node represents
-
 func end_battle(enemy: EnemyData, endState: bool) -> void:
 	# Give reward by enemies
 	
 	# Update map node
 	if endState:
 		# WIN
-		cur_map_node.set_room_progress(MapGenerator.MapNodeData.ProgressState.COMPLETED)
+		cur_map_node.set_room_progress(MapNodeData.ProgressState.COMPLETED)
 	else:
 		# LOSE
-		cur_map_node.set_room_progress(MapGenerator.MapNodeData.ProgressState.REACHED)
+		cur_map_node.set_room_progress(MapNodeData.ProgressState.REACHED)
 	
 	# Go back to map
 	_change_scene(Scene.MAP)
 
 func restart() -> void:
 	get_tree().call_deferred("reload_current_scene")
+
+func start_encounter(data: MapNodeData) -> void:
+	print("Starting encounter of node [%.v] %s" %[data.grid_pos, data.encounter_type.id])
+	_change_scene(Scene.BATTLE)
+	cur_map_node = data
+	data.encounter_type.start()

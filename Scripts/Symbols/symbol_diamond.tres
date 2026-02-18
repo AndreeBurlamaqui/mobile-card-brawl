@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_58ypn")
-id = "club"
-display_name = "Club"
+id = "DIAMOND"
+display_name = "Diamond"
 icon = ExtResource("1_7yklw")
 metadata/_custom_type_script = "uid://blp6x540ad8ul"
